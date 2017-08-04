@@ -28,7 +28,7 @@ public class GUIController : MonoBehaviour
 			endTurn ();
 		}
 
-        if (Input.GetMouseButtonDown(0))
+		if (Input.GetKeyDown(KeyCode.D))
         {
             int diceRoll = Random.Range(1, 7);
             Debug.Log("diceRoll: " + diceRoll);
