@@ -4,16 +4,34 @@ using System.Collections.Generic;
 public class GUIController : MonoBehaviour
 {
     public CellGrid CellGrid;
+	public Transform UnitsParent;
+
     public Unit unit;
 	public Unit unit1;
+
+	int curPlayer = 0;
+	int numPlayers;
 
 	public Unit curUnit;
 
     public EventStart eventStart;
 
+	public List<Unit> units = new List<Unit>();
+
+
+
     void Start()
     {
-		curUnit = unit;
+		for (int i = 0; i < UnitsParent.childCount; i++) {
+			var child = UnitsParent.GetChild (i).GetComponent<Unit> ();
+			units.Add (child);
+		}
+		curUnit = units[curPlayer];
+		foreach (Unit c in units) {
+			Debug.Log (c);
+		}
+		numPlayers = units.Count;
+		Debug.Log ("Current unit is " + units[0]);
         Debug.Log("Game started!");
     }
 
@@ -64,47 +82,52 @@ public class GUIController : MonoBehaviour
 
             //calls create event with the destination cell
             eventStart.createEvent(curUnit.PathLocation);
+
         }
 
         if (Input.GetKeyDown(KeyCode.G))
         {
-            for (int col = 1; col < 8; col++)
-            {
-                int[] coord = new int[2] { 2, col };
-                Cell targetCell = CellGrid.Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
-                curUnit.Path.Add(targetCell);
-            }
-            for (int row = 3; row < 8; row++)
-            {
-                int[] coord = new int[2] { row, 7 };
-                Cell targetCell = CellGrid.Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
-                curUnit.Path.Add(targetCell);
-            }
-            for (int col = 7; col >= 1; col--)
-            {
-                int[] coord = new int[2] { 8, col };
-                Cell targetCell = CellGrid.Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
-                curUnit.Path.Add(targetCell);
-            }
-            for (int row = 7; row >= 3; row--)
-            {
-                int[] coord = new int[2] { row, 1 };
-                Cell targetCell = CellGrid.Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
-                curUnit.Path.Add(targetCell);
-            }
-            
-            Debug.Log("Path generated at Count: " + curUnit.Path.Count);
-
-            Cell startCell = curUnit.Path[curUnit.PathLocation];
-            List<Cell> pp = new List<Cell>();
-            pp.Add(startCell);
-            curUnit.Move(startCell, pp);
-            Debug.Log("Player starting at PathLocation: " + curUnit.PathLocation);
+			startTurn ();
         }
 
 
 
     }
+
+	public void startTurn(){
+		for (int col = 1; col < 8; col++)
+		{
+			int[] coord = new int[2] { 2, col };
+			Cell targetCell = CellGrid.Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
+			curUnit.Path.Add(targetCell);
+		}
+		for (int row = 3; row < 8; row++)
+		{
+			int[] coord = new int[2] { row, 7 };
+			Cell targetCell = CellGrid.Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
+			curUnit.Path.Add(targetCell);
+		}
+		for (int col = 7; col >= 1; col--)
+		{
+			int[] coord = new int[2] { 8, col };
+			Cell targetCell = CellGrid.Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
+			curUnit.Path.Add(targetCell);
+		}
+		for (int row = 7; row >= 3; row--)
+		{
+			int[] coord = new int[2] { row, 1 };
+			Cell targetCell = CellGrid.Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
+			curUnit.Path.Add(targetCell);
+		}
+
+		Debug.Log("Path generated at Count: " + curUnit.Path.Count);
+
+		Cell startCell = curUnit.Path[curUnit.PathLocation];
+		List<Cell> pp = new List<Cell>();
+		pp.Add(startCell);
+		curUnit.Move(startCell, pp);
+		Debug.Log("Player starting at PathLocation: " + curUnit.PathLocation);
+	}
 
     public int[] IndexToCoord(int index, int width, int height)
     {
@@ -122,14 +145,13 @@ public class GUIController : MonoBehaviour
 	public void endTurn()
 	{
 		Debug.Log ("Turn has ended!");
-
-		if (curUnit == unit) {
-			curUnit = unit1;
+		curPlayer = curPlayer + 1;
+		if (curPlayer >= numPlayers - 1) {
+			curPlayer = curPlayer % numPlayers;
 		} 
-		else {
-			curUnit = unit;
-		}
-		Debug.Log (curUnit);
+		Debug.Log ("New Player is " + curPlayer);
+		curUnit = units [curPlayer];
+		Debug.Log ("New Unit is" + curUnit);
 	}
 //    public void GeneratePath()
 //    {
