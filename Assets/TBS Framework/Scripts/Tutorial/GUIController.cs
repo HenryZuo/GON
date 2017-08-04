@@ -33,6 +33,7 @@ public class GUIController : MonoBehaviour
 		numPlayers = units.Count;
 		Debug.Log ("Current unit is " + units[0]);
         Debug.Log("Game started!");
+		Debug.Log ("Press 'Start Your Turn', then Press D to move");
     }
 
 	void Update ()
@@ -48,41 +49,7 @@ public class GUIController : MonoBehaviour
 
 		if (Input.GetKeyDown(KeyCode.D))
         {
-            int diceRoll = Random.Range(1, 7);
-            Debug.Log("diceRoll: " + diceRoll);
-            
-            int NewLocation = curUnit.PathLocation + diceRoll;
-            if (NewLocation > 23)
-            {
-                NewLocation = NewLocation % 24;
-            }
-            Debug.Log("PathLocation updated to: " + NewLocation);
-
-            List<Cell> p;
-            if (NewLocation < curUnit.PathLocation)
-            {
-                List<Cell> tail = curUnit.Path.GetRange(curUnit.PathLocation, 24 - curUnit.PathLocation);
-                List<Cell> head = curUnit.Path.GetRange(0, NewLocation + 1);
-                tail.Reverse();
-                head.Reverse();
-                head.AddRange(tail);
-                p = head;
-            } else
-            {
-                p = curUnit.Path.GetRange(curUnit.PathLocation, diceRoll + 1);
-                p.Reverse();
-            }
-            Debug.Log("movement path p at Count: " + p.Count);
-            
-            Cell destinationCell = curUnit.Path[NewLocation];
-
-            curUnit.Move(destinationCell, p);
-
-            curUnit.PathLocation = NewLocation;
-
-            //calls create event with the destination cell
-            eventStart.createEvent(curUnit.PathLocation);
-
+			Move ();
         }
 
         if (Input.GetKeyDown(KeyCode.G))
@@ -93,6 +60,44 @@ public class GUIController : MonoBehaviour
 
 
     }
+
+	public void Move(){
+		int diceRoll = Random.Range(1, 7);
+		Debug.Log("diceRoll: " + diceRoll);
+
+		int NewLocation = curUnit.PathLocation + diceRoll;
+		if (NewLocation > 23)
+		{
+			NewLocation = NewLocation % 24;
+		}
+		Debug.Log("PathLocation updated to: " + NewLocation);
+
+		List<Cell> p;
+		if (NewLocation < curUnit.PathLocation)
+		{
+			List<Cell> tail = curUnit.Path.GetRange(curUnit.PathLocation, 24 - curUnit.PathLocation);
+			List<Cell> head = curUnit.Path.GetRange(0, NewLocation + 1);
+			tail.Reverse();
+			head.Reverse();
+			head.AddRange(tail);
+			p = head;
+		} else
+		{
+			p = curUnit.Path.GetRange(curUnit.PathLocation, diceRoll + 1);
+			p.Reverse();
+		}
+		Debug.Log("movement path p at Count: " + p.Count);
+
+		Cell destinationCell = curUnit.Path[NewLocation];
+
+		curUnit.Move(destinationCell, p);
+
+		curUnit.PathLocation = NewLocation;
+
+		//calls create event with the destination cell
+		eventStart.createEvent(curUnit.PathLocation);
+		Debug.Log ("Press the End Turn button on the bottom right when you're done with your turn");
+	}
 
 	public void startTurn(){
 		for (int col = 1; col < 8; col++)
