@@ -66,6 +66,9 @@ public abstract class Unit : MonoBehaviour
     /// </summary>
     public int PlayerNumber;
 
+	public List<Cell> Path = new List<Cell>();
+	public int PathLocation = 0;
+
     /// <summary>
     /// Indicates if movement animation is playing.
     /// </summary>

@@ -5,14 +5,15 @@ public class GUIController : MonoBehaviour
 {
     public CellGrid CellGrid;
     public Unit unit;
+	public Unit unit1;
+
+	public Unit curUnit;
 
     public EventStart eventStart;
 
-    public List<Cell> Path = new List<Cell>();
-    public int PathLocation = 0;
-
     void Start()
     {
+		curUnit = unit;
         Debug.Log("Game started!");
     }
 
@@ -22,13 +23,17 @@ public class GUIController : MonoBehaviour
         {
             CellGrid.EndTurn(); //User ends his turn by pressing "n" on keyboard.
         }
+		if (Input.GetKeyDown (KeyCode.E)) 
+		{
+			endTurn ();
+		}
 
         if (Input.GetMouseButtonDown(0))
         {
             int diceRoll = Random.Range(1, 7);
             Debug.Log("diceRoll: " + diceRoll);
             
-            int NewLocation = PathLocation + diceRoll;
+            int NewLocation = curUnit.PathLocation + diceRoll;
             if (NewLocation > 23)
             {
                 NewLocation = NewLocation % 24;
@@ -36,29 +41,29 @@ public class GUIController : MonoBehaviour
             Debug.Log("PathLocation updated to: " + NewLocation);
 
             List<Cell> p;
-            if (NewLocation < PathLocation)
+            if (NewLocation < curUnit.PathLocation)
             {
-                List<Cell> tail = Path.GetRange(PathLocation, 24 - PathLocation);
-                List<Cell> head = Path.GetRange(0, NewLocation + 1);
+                List<Cell> tail = curUnit.Path.GetRange(curUnit.PathLocation, 24 - curUnit.PathLocation);
+                List<Cell> head = curUnit.Path.GetRange(0, NewLocation + 1);
                 tail.Reverse();
                 head.Reverse();
                 head.AddRange(tail);
                 p = head;
             } else
             {
-                p = Path.GetRange(PathLocation, diceRoll + 1);
+                p = curUnit.Path.GetRange(curUnit.PathLocation, diceRoll + 1);
                 p.Reverse();
             }
             Debug.Log("movement path p at Count: " + p.Count);
             
-            Cell destinationCell = Path[NewLocation];
+            Cell destinationCell = curUnit.Path[NewLocation];
 
-            unit.Move(destinationCell, p);
+            curUnit.Move(destinationCell, p);
 
-            PathLocation = NewLocation;
+            curUnit.PathLocation = NewLocation;
 
             //calls create event with the destination cell
-            eventStart.createEvent(PathLocation);
+            eventStart.createEvent(curUnit.PathLocation);
         }
 
         if (Input.GetKeyDown(KeyCode.G))
@@ -67,34 +72,34 @@ public class GUIController : MonoBehaviour
             {
                 int[] coord = new int[2] { 2, col };
                 Cell targetCell = CellGrid.Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
-                Path.Add(targetCell);
+                curUnit.Path.Add(targetCell);
             }
             for (int row = 3; row < 8; row++)
             {
                 int[] coord = new int[2] { row, 7 };
                 Cell targetCell = CellGrid.Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
-                Path.Add(targetCell);
+                curUnit.Path.Add(targetCell);
             }
             for (int col = 7; col >= 1; col--)
             {
                 int[] coord = new int[2] { 8, col };
                 Cell targetCell = CellGrid.Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
-                Path.Add(targetCell);
+                curUnit.Path.Add(targetCell);
             }
             for (int row = 7; row >= 3; row--)
             {
                 int[] coord = new int[2] { row, 1 };
                 Cell targetCell = CellGrid.Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
-                Path.Add(targetCell);
+                curUnit.Path.Add(targetCell);
             }
             
-            Debug.Log("Path generated at Count: " + Path.Count);
+            Debug.Log("Path generated at Count: " + curUnit.Path.Count);
 
-            Cell startCell = Path[PathLocation];
+            Cell startCell = curUnit.Path[curUnit.PathLocation];
             List<Cell> pp = new List<Cell>();
             pp.Add(startCell);
-            unit.Move(startCell, pp);
-            Debug.Log("Player starting at PathLocation: " + PathLocation);
+            curUnit.Move(startCell, pp);
+            Debug.Log("Player starting at PathLocation: " + curUnit.PathLocation);
         }
 
 
@@ -113,32 +118,44 @@ public class GUIController : MonoBehaviour
     {
         return coord[0] * width + coord[1];
     }
+	
+	public void endTurn()
+	{
+		Debug.Log ("Turn has ended!");
 
-    public void GeneratePath()
-    {
-        for (int col = 1; col < 8; col++)
-        {
-            int[] coord = new int[2] { 2, col };
-            Cell targetCell = CellGrid.Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
-            Path.Add(targetCell);
-        }
-        for (int row = 3; row < 8; row++)
-        {
-            int[] coord = new int[2] { row, 7 };
-            Cell targetCell = CellGrid.Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
-            Path.Add(targetCell);
-        }
-        for (int col = 1; col < 8; col++)
-        {
-            int[] coord = new int[2] { 8, col };
-            Cell targetCell = CellGrid.Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
-            Path.Add(targetCell);
-        }
-        for (int row = 3; row < 8; row++)
-        {
-            int[] coord = new int[2] { row, 1 };
-            Cell targetCell = CellGrid.Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
-            Path.Add(targetCell);
-        }
-    }
+		if (curUnit == unit) {
+			curUnit = unit1;
+		} 
+		else {
+			curUnit = unit;
+		}
+		Debug.Log (curUnit);
+	}
+//    public void GeneratePath()
+//    {
+//        for (int col = 1; col < 8; col++)
+//        {
+//            int[] coord = new int[2] { 2, col };
+//            Cell targetCell = CellGrid.Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
+//            Path.Add(targetCell);
+//        }
+//        for (int row = 3; row < 8; row++)
+//        {
+//            int[] coord = new int[2] { row, 7 };
+//            Cell targetCell = CellGrid.Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
+//            Path.Add(targetCell);
+//        }
+//        for (int col = 1; col < 8; col++)
+//        {
+//            int[] coord = new int[2] { 8, col };
+//            Cell targetCell = CellGrid.Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
+//            Path.Add(targetCell);
+//        }
+//        for (int row = 3; row < 8; row++)
+//        {
+//            int[] coord = new int[2] { row, 1 };
+//            Cell targetCell = CellGrid.Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
+//            Path.Add(targetCell);
+//        }
+//    }
 }
