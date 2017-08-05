@@ -28,8 +28,6 @@ public class ModalPanel : MonoBehaviour {
         return modalPanel;
     }
 
-
-
     // Yes, No, Cancel: takes in string, Yes event, No event, Cancel event
     public void Choice (string quote, UnityAction yesEvent, UnityAction noEvent, UnityAction cancelEvent)
     {
@@ -58,4 +56,5 @@ public class ModalPanel : MonoBehaviour {
     {
         modalPanelObject.SetActive(false);
     }
+    
 }

@@ -10,8 +10,8 @@ public class StartTurn : MonoBehaviour {
 
 	void Start()
 	{
-		Button btn = button.GetComponent<Button>();
-		btn.onClick.AddListener(TaskOnClick);
+		//Button btn = button.GetComponent<Button>();
+		//btn.onClick.AddListener(TaskOnClick);
 	}
 
 	void TaskOnClick()

@@ -14,17 +14,58 @@ public class Data : MonoBehaviour {
 			{"name", "King's Landing"},
 			{"soldiers", "50000"},
 			{"wealth", "100000"},
-			{"owner", "Lanisters"}
+			{"owner", "Lanisters"},
+            {"type", "castle"}
 		};
 
 		Dictionary<string, string> winterfell = new Dictionary<string, string>{
 			{"name", "Winterfell"},
 			{"soldiers", "20000"},
 			{"wealth", "10000"},
-			{"owner", "Starks"}
-		};
+			{"owner", "Starks"},
+            {"type", "castle"}
+        };
 
-		gameData.Add (kings_landing);
+        Dictionary<string, string> lose_soldiers = new Dictionary<string, string>{
+            {"name", "soldiers"},
+            {"change", "negative"},
+            {"events", "Greyscale has infected some of your soldiers. They must be exiled before everyone is afflicted!," +
+                       "Your supply carts have been delayed and you don't have enough food!," +
+                       "Winter is coming and strange things lurk about in the night. Some of your soldiers scare and desert you!," +
+                       "You are attacked by the Hill Tribes and caught by suprise!," +
+                       "Wildings have made it past the wall and raid your camp during the night!," +
+                       "Your army has been attacked by a group of dire wolves!"},
+            {"type", "random"}
+        };
+
+        Dictionary<string, string> gain_soldiers = new Dictionary<string, string>{
+            {"name", "soldiers"},
+            {"change", "positive"},
+            {"events", "Bannermen have arrived to aid your cause!," +
+                       "A group of unsullied has arrived as a gift!," +
+                       "Your righteous actions have swayed enemies to join your cause!," +
+                       "A new alliance has been brokered and fresh soldiers flock to your aid!," +
+                       "Mysterious hooded figures ride up to your camp in the dead of night. You find that it is your bastard son and his followers!"},
+            {"type", "random"}
+        };
+        Dictionary<string, string> lose_wealth = new Dictionary<string, string>{
+            {"name", "wealth"},
+            {"change", "negative"},
+            {"events", "Enemy spies have infiltrated your camp and pilfered your coffers!," +
+                       "You encounter a Dothraki hoard and must pay tribute to avoid battle!," +
+                       "It is time to pay off loans to the Iron Bank of Braavos!," +
+                       "Morale is low and you must hold a feast to raise people's spirits!"},
+            {"type", "random"}
+        };
+
+        gameData.Add(lose_soldiers);
+        gameData.Add(gain_soldiers);
+        gameData.Add(lose_wealth);
+        gameData.Add(lose_soldiers);
+        gameData.Add(gain_soldiers);
+        gameData.Add(lose_soldiers);
+        gameData.Add(lose_wealth);
+        gameData.Add (kings_landing);
 		gameData.Add (winterfell);
 
 		//instantiate players
@@ -44,6 +85,8 @@ public class Data : MonoBehaviour {
 
 		players.Add (john_snow);
 		players.Add (ned_stark);
+        players.Add (john_snow);
+        players.Add (ned_stark);
 	}
 
 	/*
@@ -86,8 +129,8 @@ public class Data : MonoBehaviour {
 	}
 
 	//map tile get/set function
-	public string getEvent(int pathLocation) {
-		return gameData [pathLocation]["eventType"];
+	public Dictionary<string, string> getEvent(int pathLocation) {
+		return gameData [pathLocation];
 	}
 
 	public string getSoldiers(int pathLocation) {
