@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 8583d66f04010479c984c8f4c06400d3
+timeCreated: 1501886676
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Game of Thrones
+  fontNames:
+  - Game of Thrones
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
