@@ -19,16 +19,22 @@ public class GUIController : MonoBehaviour
 	public List<Unit> units = new List<Unit>();
     public List<Cell> Path = new List<Cell>();
 
+    // create reference to self
 
     void Start()
     {
-		
+        
     }
 
 	void Update ()
     {
 
-		if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            startGame();
+        }
+
+        if (Input.GetKeyDown(KeyCode.D))
         {
 			Move ();
         }
