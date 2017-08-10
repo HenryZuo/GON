@@ -26,7 +26,7 @@ function Start () {
 
 	//instantiate renders array for water tiles
 	var arr = GameObject.FindGameObjectsWithTag("water");
-	for (var i = 0; i < arr.length; i++) {
+	for (var i = 0; i < renderers.length; i++) {
 		renderers[i] = arr[i].GetComponent.<Renderer>();
 	}
 }
