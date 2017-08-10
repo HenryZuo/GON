@@ -13,6 +13,8 @@ public class Data : MonoBehaviour {
 	private List<Dictionary<string, string>> player4_generals = new List<Dictionary<string, string>>();
 	private List<Dictionary<string, string>> players = new List<Dictionary<string, string>>();
 
+    public int soldiers = 3000;
+
 	public void initializeData() {
 		//instantiate game data
 		Dictionary<string, string> kings_landing = new Dictionary<string, string>{

@@ -36,7 +36,7 @@ public class GUIController : MonoBehaviour
 
 	public void Move(){
 		int diceRoll = UnityEngine.Random.Range(1, 7);
-        displayManager.DisplayDiceRoll("You rolled to " + diceRoll.ToString());
+        displayManager.DisplayDiceRoll("You rolled a " + diceRoll.ToString());
         // DiceText.text = diceRoll.ToString();
 
         int NewLocation = curUnit.PathLocation + diceRoll;
