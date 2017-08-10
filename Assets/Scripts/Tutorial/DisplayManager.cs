@@ -6,6 +6,8 @@ public class DisplayManager : MonoBehaviour
 {
 
     public Text displayText;
+    public Text diceText;
+
     public float displayTime;
     public float fadeTime;
 
@@ -31,6 +33,12 @@ public class DisplayManager : MonoBehaviour
         SetAlpha();
     }
 
+    public void DisplayDiceRoll(string message)
+    {
+        diceText.text = message;
+        SetAlpha();
+    }
+
     void SetAlpha()
     {
         if (fadeAlpha != null)
@@ -43,19 +51,36 @@ public class DisplayManager : MonoBehaviour
 
     IEnumerator FadeAlpha()
     {
-        Color resetColor = displayText.color;
-        resetColor.a = 1;
-        displayText.color = resetColor;
+        //Color resetColor = displayText.color;
+        //resetColor.a = 1;
+        //displayText.color = resetColor;
+
+        //yield return new WaitForSeconds(displayTime);
+
+        //while (displayText.color.a > 0)
+        //{
+        //    Color displayColor = displayText.color;
+        //    displayColor.a -= Time.deltaTime / fadeTime;
+        //    displayText.color = displayColor;
+        //    yield return null;
+        //}
+        //yield return null;
+
+        // --dice roll--
+        Color resetColor1 = diceText.color;
+        resetColor1.a = 1;
+        diceText.color = resetColor1;
 
         yield return new WaitForSeconds(displayTime);
 
-        while (displayText.color.a > 0)
+        while (diceText.color.a > 0)
         {
-            Color displayColor = displayText.color;
+            Color displayColor = diceText.color;
             displayColor.a -= Time.deltaTime / fadeTime;
-            displayText.color = displayColor;
+            diceText.color = displayColor;
             yield return null;
         }
         yield return null;
+        // --dice roll--
     }
 }

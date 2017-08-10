@@ -136,7 +136,7 @@ public abstract class Unit : MonoBehaviour
         MarkAsDestroyed();
         Destroy(gameObject);
     }
-
+    
     /// <summary>
     /// Method is called when unit is selected.
     /// </summary>
@@ -212,13 +212,17 @@ public abstract class Unit : MonoBehaviour
         if (isMoving)
             return;
 
-        var totalMovementCost = path.Sum(h => h.MovementCost);
+        // Henry's change below:
+        // var totalMovementCost = path.Sum(h => h.MovementCost);
+        var totalMovementCost = 0;
+
         if (MovementPoints < totalMovementCost)
             return;
 
         MovementPoints -= totalMovementCost;
 
-        Cell.IsTaken = false;
+        // Henry's change below:
+        // Cell.IsTaken = false;
         Cell = destinationCell;
         destinationCell.IsTaken = true;
 

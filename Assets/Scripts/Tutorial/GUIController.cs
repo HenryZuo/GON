@@ -1,15 +1,18 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using System;
+using UnityEngine.UI;
 
 public class GUIController : MonoBehaviour
 {
     public CellGrid CellGrid;
 	public Transform UnitsParent;
+    public Data Data;
+    public Text DiceText;
+    private DisplayManager displayManager;
 
-    public Unit unit;
-	public Unit unit1;
 
-	int curPlayer = 0;
+    int curPlayer = 0;
 	int numPlayers = 4;
 
 	public Unit curUnit;
@@ -19,33 +22,24 @@ public class GUIController : MonoBehaviour
 	public List<Unit> units = new List<Unit>();
     public List<Cell> Path = new List<Cell>();
 
-    // create reference to self
-
     void Start()
     {
-        
+        startGame();
+        displayManager = DisplayManager.Instance();
+        DiceText.text = "";
     }
 
 	void Update ()
     {
 
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            startGame();
-        }
-
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-			Move ();
-        }
-
     }
 
 	public void Move(){
-		int diceRoll = Random.Range(1, 7);
-		Debug.Log("diceRoll: " + diceRoll);
+		int diceRoll = UnityEngine.Random.Range(1, 7);
+        displayManager.DisplayDiceRoll("You rolled to " + diceRoll.ToString());
+        // DiceText.text = diceRoll.ToString();
 
-		int NewLocation = curUnit.PathLocation + diceRoll;
+        int NewLocation = curUnit.PathLocation + diceRoll;
 		if (NewLocation > 23)
 		{
 			NewLocation = NewLocation % 24;
@@ -74,17 +68,9 @@ public class GUIController : MonoBehaviour
 
 		//calls create event with the destination cell
 		eventStart.createEvent(curUnit.PathLocation);
-	}
-
-
-	public void startTurn(){
-
-		Cell startCell = Path[curUnit.PathLocation];
-		List<Cell> pp = new List<Cell>();
-		pp.Add(startCell);
-		curUnit.Move(startCell, pp);
-	}
-
+        
+    }
+    
     public int[] IndexToCoord(int index, int width, int height)
     {
         int row = index / width;
@@ -100,24 +86,24 @@ public class GUIController : MonoBehaviour
 	
 	public void endTurn()
 	{
-		curPlayer = curPlayer + 1;
+        updatePlayerUI();
+        curPlayer = curPlayer + 1;
 		if (curPlayer >= numPlayers - 1) {
 			curPlayer = curPlayer % numPlayers;
-		} 
-		Debug.Log ("New Player is " + curPlayer);
+		}
 		curUnit = units [curPlayer];
-		Debug.Log ("New Unit is" + curUnit);
 	}
 
     public void startGame()
     {
-        generatePath();
+        Data.initializeData();
+        Path = CellGrid.generatePath();
         for (int i = 0; i < UnitsParent.childCount; i++)
         {
             var child = UnitsParent.GetChild(i).GetComponent<Unit>();
             units.Add(child);
             curUnit = units[i];
-            int randomIndex = Random.Range(0, 5);
+            int randomIndex = UnityEngine.Random.Range(0, 5);
             Cell startCell = Path[randomIndex];
             List<Cell> pp = new List<Cell>();
             pp.Add(startCell);
@@ -125,35 +111,42 @@ public class GUIController : MonoBehaviour
             curUnit.PathLocation = randomIndex;
         }
         Debug.Log("Game started!");
+        updatePlayerUI();
     }
 
-
-    public void generatePath()
+    public void updatePlayerUI()
     {
-        for (int col = 1; col < 8; col++)
+        Transform playerUI = transform.Find("Canvas").Find("Player UI");
+        for (int i = 0; i < playerUI.childCount - 1; i++)
         {
-            int[] coord = new int[2] { 2, col };
-            Cell targetCell = CellGrid.Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
-            Path.Add(targetCell);
+            Transform stats = playerUI.GetChild(i).Find("Stats");
+            for (int j = 0; j < stats.childCount; j++)
+            {
+                string newVal;
+                switch (j)
+                {                    
+                    case 0:
+                        newVal = Data.getPlayerAttribute(i, "wealth");
+                        stats.GetChild(j).GetChild(1).GetComponent<Text>().text = newVal;
+                        break;
+                    case 1:
+                        newVal = Data.getPlayerAttribute(i, "soldiers");
+                        stats.GetChild(j).GetChild(1).GetComponent<Text>().text = newVal;
+                        break;
+                    case 2:
+                        newVal = Data.getPlayerAttribute(i, "generals").Split(',').Length.ToString();
+                        stats.GetChild(j).GetChild(1).GetComponent<Text>().text = newVal;
+                        break;
+                    case 3:
+                        newVal = Data.getPlayerAttribute(i, "castle").Split(',').Length.ToString();
+                        stats.GetChild(j).GetChild(1).GetComponent<Text>().text = newVal;
+                        break;
+                    default:
+                        Debug.Log("updatePlayerUI() is at default case");
+                        break;
+                }
+            }
         }
-        for (int row = 3; row < 8; row++)
-        {
-            int[] coord = new int[2] { row, 7 };
-            Cell targetCell = CellGrid.Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
-            Path.Add(targetCell);
-        }
-        for (int col = 7; col >= 1; col--)
-        {
-            int[] coord = new int[2] { 8, col };
-            Cell targetCell = CellGrid.Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
-            Path.Add(targetCell);
-        }
-        for (int row = 7; row >= 3; row--)
-        {
-            int[] coord = new int[2] { row, 1 };
-            Cell targetCell = CellGrid.Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
-            Path.Add(targetCell);
-        }
-        Debug.Log("Path generated at Count: " + Path.Count);
     }
+    
 }

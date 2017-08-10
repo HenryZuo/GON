@@ -57,7 +57,7 @@ public class EventStart : MonoBehaviour {
             break;
         default:
           testModalWindow.TestYesNoCancel();
-          Debug.Log(data.setPlayerNumericAttribute (0, "wealth", -100));
+          data.setPlayerNumericAttribute (0, "wealth", -100);
           break;
     }
     Debug.Log("Wealth: " + data.getPlayerAttribute(0, "wealth"));

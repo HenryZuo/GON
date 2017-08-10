@@ -12,6 +12,7 @@ public class ModalPanel : MonoBehaviour {
     public Button noButton;
     public Button cancelButton;
     public GameObject modalPanelObject;
+    public GUIController guiController;
 
     private static ModalPanel modalPanel;
 
@@ -55,6 +56,7 @@ public class ModalPanel : MonoBehaviour {
     void ClosePanel()
     {
         modalPanelObject.SetActive(false);
+        guiController.endTurn();
     }
     
 }

@@ -10,6 +10,7 @@ public class RandomEventPanel : MonoBehaviour
     public Text quote;
     public GameObject randomEventPanelObj;
     public Button closeButton;
+    public GUIController guiController;
 
     private static RandomEventPanel randomEventPanel;
 
@@ -33,12 +34,13 @@ public class RandomEventPanel : MonoBehaviour
         closeButton.onClick.RemoveAllListeners();
         closeButton.onClick.AddListener(CloseNotification);
 
-        this.quote.text = notificationText;
+        quote.text = notificationText;
         closeButton.gameObject.SetActive(true);
     }
 
     void CloseNotification()
     {
         randomEventPanelObj.SetActive(false);
+        guiController.endTurn();
     }
 }

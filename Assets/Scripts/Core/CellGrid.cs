@@ -40,9 +40,9 @@ public class CellGrid : MonoBehaviour
     public Transform PlayersParent;
 
     public List<Player> Players { get; private set; }
-    public List<Cell> Cells { get; private set; }
+    public List<Cell> Cells = new List<Cell>();
     public List<Unit> Units { get; private set; }
-
+    
     void Start()
     {
         Players = new List<Player>();
@@ -57,7 +57,20 @@ public class CellGrid : MonoBehaviour
         NumberOfPlayers = Players.Count;
         CurrentPlayerNumber = Players.Min(p => p.PlayerNumber);
 
-        Cells = new List<Cell>();
+        createCellsList();
+
+        var unitGenerator = GetComponent<IUnitGenerator>();
+        if (unitGenerator != null)
+        {
+            Units = unitGenerator.SpawnUnits(Cells);
+        }
+        else
+            Debug.LogError("No IUnitGenerator script attached to cell grid");
+        StartGame();
+    }
+
+    private void createCellsList()
+    {
         for (int i = 0; i < transform.childCount; i++)
         {
             var cell = transform.GetChild(i).gameObject.GetComponent<Cell>();
@@ -65,56 +78,6 @@ public class CellGrid : MonoBehaviour
                 Cells.Add(cell);
             else
                 Debug.LogError("Invalid object in cells paretn game object");
-        }
-      
-        foreach (var cell in Cells)
-        {
-            cell.CellClicked += OnCellClicked;
-            cell.CellHighlighted += OnCellHighlighted;
-            cell.CellDehighlighted += OnCellDehighlighted;
-        }
-             
-        var unitGenerator = GetComponent<IUnitGenerator>();
-        if (unitGenerator != null)
-        {
-            Units = unitGenerator.SpawnUnits(Cells);
-            foreach (var unit in Units)
-            {
-                unit.UnitClicked += OnUnitClicked;
-                unit.UnitDestroyed += OnUnitDestroyed;
-            }
-        }
-        else
-            Debug.LogError("No IUnitGenerator script attached to cell grid");
-        
-        StartGame();
-    }
-
-    private void OnCellDehighlighted(object sender, EventArgs e)
-    {
-        CellGridState.OnCellDeselected(sender as Cell);
-    }
-    private void OnCellHighlighted(object sender, EventArgs e)
-    {
-        CellGridState.OnCellSelected(sender as Cell);
-    } 
-    private void OnCellClicked(object sender, EventArgs e)
-    {
-        CellGridState.OnCellClicked(sender as Cell);
-    }
-
-    private void OnUnitClicked(object sender, EventArgs e)
-    {
-        CellGridState.OnUnitClicked(sender as Unit);
-    }
-    private void OnUnitDestroyed(object sender, AttackEventArgs e)
-    {
-        Units.Remove(sender as Unit);
-        var totalPlayersAlive = Units.Select(u => u.PlayerNumber).Distinct().ToList(); //Checking if the game is over
-        if (totalPlayersAlive.Count == 1)
-        {
-            if(GameEnded != null)
-                GameEnded.Invoke(this, new EventArgs());
         }
     }
     
@@ -153,5 +116,45 @@ public class CellGrid : MonoBehaviour
 
         Units.FindAll(u => u.PlayerNumber.Equals(CurrentPlayerNumber)).ForEach(u => { u.OnTurnStart(); });
         Players.Find(p => p.PlayerNumber.Equals(CurrentPlayerNumber)).Play(this);     
+    }
+
+    public List<Cell> generatePath()
+    {
+        if(Cells.Count == 0)
+        {
+            createCellsList();
+        }
+        List<Cell> returnPath = new List<Cell>();
+        for (int col = 1; col < 8; col++)
+        {
+            int[] coord = new int[2] { 2, col };
+            Cell targetCell = Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
+            returnPath.Add(targetCell);
+        }
+        for (int row = 3; row < 8; row++)
+        {
+            int[] coord = new int[2] { row, 7 };
+            Cell targetCell = Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
+            returnPath.Add(targetCell);
+        }
+        for (int col = 7; col >= 1; col--)
+        {
+            int[] coord = new int[2] { 8, col };
+            Cell targetCell = Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
+            returnPath.Add(targetCell);
+        }
+        for (int row = 7; row >= 3; row--)
+        {
+            int[] coord = new int[2] { row, 1 };
+            Cell targetCell = Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
+            returnPath.Add(targetCell);
+        }
+
+        return returnPath;
+    }
+
+    public int CoordToIndex(int[] coord, int width)
+    {
+        return coord[0] * width + coord[1];
     }
 }
