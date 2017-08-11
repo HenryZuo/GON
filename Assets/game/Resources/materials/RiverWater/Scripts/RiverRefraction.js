@@ -35,7 +35,7 @@ function Update () {
 	matrice.x = matrice.x+(flowspeed/100);
 	matrice.y = matrice.y-(flowspeed/100);
 	
-	for (var i = 0; i < renderers.length; ++i) {
+	for (var i = 0; i < renderers.length - 1; ++i) {
 	renderers[i].sharedMaterial.SetTextureOffset("_Normals",-matrice);
 	renderers[i].sharedMaterial.SetTextureOffset("_ReflectTex",matrice);
 	renderers[i].sharedMaterial.SetTextureOffset("_WaveMap",matrice);

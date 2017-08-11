@@ -125,31 +125,21 @@ public class CellGrid : MonoBehaviour
             createCellsList();
         }
         List<Cell> returnPath = new List<Cell>();
-        for (int col = 1; col < 8; col++)
-        {
-            int[] coord = new int[2] { 2, col };
-            Cell targetCell = Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
-            returnPath.Add(targetCell);
-        }
-        for (int row = 3; row < 8; row++)
-        {
-            int[] coord = new int[2] { row, 7 };
-            Cell targetCell = Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
-            returnPath.Add(targetCell);
-        }
-        for (int col = 7; col >= 1; col--)
-        {
-            int[] coord = new int[2] { 8, col };
-            Cell targetCell = Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
-            returnPath.Add(targetCell);
-        }
-        for (int row = 7; row >= 3; row--)
-        {
-            int[] coord = new int[2] { row, 1 };
-            Cell targetCell = Cells[CoordToIndex(coord, 10)].GetComponent<Cell>();
-            returnPath.Add(targetCell);
-        }
-
+		GameObject[] arr = GameObject.FindGameObjectsWithTag("path");
+		var unsortedList = new List<GameObject> ();
+		for (int i = 0; i < arr.Length; i++) {
+			if (arr [i].name != "pathTile") {
+				unsortedList.Add (arr [i]);
+			}
+		}
+		var sortedList = unsortedList.OrderBy (x => int.Parse(x.name.Substring(9))).ToList ();
+		for (int i = 0; i < sortedList.Count; i++) {
+			if (i == 86) {
+				returnPath.Add (sortedList [34].GetComponent<Cell>());
+				returnPath.Add (sortedList [35].GetComponent<Cell>());
+			}
+			returnPath.Add (sortedList [i].GetComponent<Cell>());
+		}
         return returnPath;
     }
 

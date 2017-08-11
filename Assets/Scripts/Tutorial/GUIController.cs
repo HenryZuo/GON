@@ -40,15 +40,15 @@ public class GUIController : MonoBehaviour
         // DiceText.text = diceRoll.ToString();
 
         int NewLocation = curUnit.PathLocation + diceRoll;
-		if (NewLocation > 23)
+		if (NewLocation > 117)
 		{
-			NewLocation = NewLocation % 24;
+			NewLocation = NewLocation % 118;
 		}
 
 		List<Cell> p;
 		if (NewLocation < curUnit.PathLocation)
 		{
-			List<Cell> tail = Path.GetRange(curUnit.PathLocation, 24 - curUnit.PathLocation);
+			List<Cell> tail = Path.GetRange(curUnit.PathLocation, 118 - curUnit.PathLocation);
 			List<Cell> head = Path.GetRange(0, NewLocation + 1);
 			tail.Reverse();
 			head.Reverse();
