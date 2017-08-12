@@ -14,6 +14,7 @@ public class Data : MonoBehaviour {
 	private List<Dictionary<string, string>> players = new List<Dictionary<string, string>>();
 
     public int soldiers = 3000;
+	public int totalSoldiers = 10000;
 
 	public void initializeData() {
 		//instantiate game data
