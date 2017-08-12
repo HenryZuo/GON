@@ -7,7 +7,7 @@ public class SampleUnit : Unit
     public Color LeadingColor;
     public Transform CellGrid;
     private int dice;
-
+    
     public override void Initialize()
     {
         base.Initialize();

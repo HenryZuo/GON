@@ -110,7 +110,6 @@ public class GUIController : MonoBehaviour
             curUnit.Move(startCell, pp);
             curUnit.PathLocation = randomIndex;
         }
-        Debug.Log("Game started!");
         updatePlayerUI();
     }
 
