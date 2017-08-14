@@ -7,7 +7,7 @@ public class Data : MonoBehaviour {
 
 	private List<Dictionary<string, string>> gameData = new List<Dictionary<string, string>>();
 	private List<Dictionary<string, string>> available_generals = new List<Dictionary<string, string>>();
-	private List<Dictionary<string, string>> player1_generals = new List<Dictionary<string, string>>();
+	public List<Dictionary<string, string>> player1_generals = new List<Dictionary<string, string>>();
 	private List<Dictionary<string, string>> player2_generals = new List<Dictionary<string, string>>();
 	private List<Dictionary<string, string>> player3_generals = new List<Dictionary<string, string>>();
 	private List<Dictionary<string, string>> player4_generals = new List<Dictionary<string, string>>();
@@ -22,7 +22,7 @@ public class Data : MonoBehaviour {
 			{"name", "King's Landing"},
 			{"soldiers", "50000"},
 			{"wealth", "100000"},
-			{"owner", "Lanisters"},
+			{"owner", "Lannister"},
             {"type", "castle"}
 		};
 
@@ -30,7 +30,7 @@ public class Data : MonoBehaviour {
 			{"name", "Winterfell"},
 			{"soldiers", "20000"},
 			{"wealth", "10000"},
-			{"owner", "Starks"},
+			{"owner", "Stark"},
             {"type", "castle"}
         };
 
