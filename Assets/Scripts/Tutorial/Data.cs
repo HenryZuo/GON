@@ -16,6 +16,8 @@ public class Data : MonoBehaviour {
     public int soldiers = 3000;
 	public int totalSoldiers = 10000;
 
+	public int wealth = 100000;
+
 	public void initializeData() {
 		//instantiate game data
 		Dictionary<string, string> kings_landing = new Dictionary<string, string>{

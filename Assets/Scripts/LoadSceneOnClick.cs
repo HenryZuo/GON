@@ -10,8 +10,8 @@ public class LoadSceneOnClick : MonoBehaviour {
 //	public Color loadToColor = Color.black;
 //	public Texture2D fadeOutTexture;
 
-	public Image black;
-	public Animator anim;
+//	public Image black;
+//	public Animator anim;
 	public int scene;
 
 //	private int drawDepth = -1000;
@@ -47,17 +47,18 @@ public class LoadSceneOnClick : MonoBehaviour {
 //
 //	}
 		
-	IEnumerator FadeAnim(){
-		anim.SetBool ("Fade", true);
-		yield return new WaitUntil (() => black.color.a == 1);
-		SceneManager.LoadScene (scene);
-	}
+//	IEnumerator FadeAnim(){
+//		anim.SetBool ("Fade", true);
+//		yield return new WaitUntil (() => black.color.a == 1);
+//		SceneManager.LoadScene (scene);
+//	}
 //	public float BeginFade (int direction) {
 //		fadeDirection = direction;
 //		return fadeSpeed;
 //	}
 		
 	public void LoadScene(){
-		StartCoroutine (FadeAnim ());
+		SceneManager.LoadScene (scene);
+//		StartCoroutine (FadeAnim ());
 	}
 }

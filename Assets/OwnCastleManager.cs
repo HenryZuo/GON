@@ -8,11 +8,17 @@ public class OwnCastleManager : MonoBehaviour {
 	private GameObject data;
 	private Data gameData; 
 	private int soldiers;
-	private Text instruction;
+	private int wealth;
+	private Text soldiersInCastle;
+	private Text wealthInCastle;
 	public Slider soldierSlider;
+	public Slider wealthSlider;
 	private double soldiersToAdd = 0;
+	private double wealthToAdd = 0;
 	private Text soldiersAddedDisplay;
+	private Text wealthAddedDisplay;
 	private InputField soldiersInput;
+	private InputField wealthInput;
 	public Dropdown generals;
 	private List<string> options = new List<string>()
 	{
@@ -26,10 +32,17 @@ public class OwnCastleManager : MonoBehaviour {
 		data = GameObject.Find ("DataObj");
 		gameData = data.GetComponent<Data>();
 		soldiers = gameData.soldiers;
-		instruction = GameObject.Find ("Soldiers").GetComponent<Text> ();
-		instruction.text = "Soldiers " + soldiers;
+		wealth = gameData.wealth;
+		soldiersInCastle = GameObject.Find ("Soldiers").GetComponent<Text> ();
+		soldiersInCastle.text = "Soldiers: " + soldiers;
+		wealthInCastle = GameObject.Find ("Wealth").GetComponent<Text> ();
+		wealthInCastle.text = "Wealth: " + wealth;
+
 		soldiersAddedDisplay = GameObject.Find ("SoldiersToAdd").GetComponent<Text>();
 		soldiersInput = GameObject.Find ("SoldiersInput").GetComponent<InputField>();
+		wealthAddedDisplay = GameObject.Find ("WealthToAdd").GetComponent<Text> ();
+		wealthInput = GameObject.Find ("WealthInput").GetComponent<InputField> ();
+
 		generals.ClearOptions ();
 		generals.AddOptions (options);
 	}
@@ -38,10 +51,17 @@ public class OwnCastleManager : MonoBehaviour {
 	void Update(){
 	}
 		
-	public void onSliderChange(){
+	public void onSoldierSliderChange(){
 		soldiersToAdd = System.Math.Ceiling (soldierSlider.value * soldiers);
 		soldiersInput.text = soldiersToAdd.ToString();
 		soldiersAddedDisplay.text = soldiersToAdd.ToString();
-		instruction.text = "Soldiers: " + (soldiers + soldiersToAdd);
+		soldiersInCastle.text = "Soldiers: " + (soldiers + soldiersToAdd);
+	}
+
+	public void onWealthSliderChange(){
+		wealthToAdd = System.Math.Ceiling (wealthSlider.value * wealth);
+		wealthInput.text = wealthToAdd.ToString ();
+		wealthAddedDisplay.text = wealthToAdd.ToString ();
+		wealthInCastle.text = "Wealth: " + (wealth + wealthToAdd);
 	}
 }
