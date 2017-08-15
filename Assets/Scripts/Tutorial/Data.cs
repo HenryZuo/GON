@@ -17,6 +17,8 @@ public class Data : MonoBehaviour {
 	public int totalSoldiers = 10000;
 
 	public int wealth = 100000;
+	public int castleWealth = 10000;
+	public int castleTaxPercent = 15;
 
 	public void initializeData() {
 		//instantiate game data

@@ -5,7 +5,11 @@ using UnityEngine;
 public class DontDestroyObj : MonoBehaviour {
 
 	void Awake(){
-		Debug.Log (gameObject);
 		DontDestroyOnLoad (gameObject);
+
+		if (FindObjectsOfType (GetType ()).Length > 1) 
+		{
+			Destroy (gameObject);
+		}
 	}
 }
