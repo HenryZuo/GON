@@ -100,7 +100,7 @@ namespace Assets.FantasyHeroes.Scripts
 
             var layout = part.GetComponent<SpriteLayout>();
             var pivot = new Vector2(layout.Pivot.x / layout.Rect.width, layout.Pivot.y / layout.Rect.height);
-
+            
             part.sprite = Sprite.Create(texture, layout.Rect, pivot, 100, 2, SpriteMeshType.Tight);
             part.sprite.name = "Dynamic";
         }

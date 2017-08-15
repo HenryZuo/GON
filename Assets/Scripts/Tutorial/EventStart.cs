@@ -3,10 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EventStart : MonoBehaviour {
+    
+  private Data data;
+    private PersistentGame game;
+  private TestModalWindow testModalWindow;
 
-  public Data data;
-  public TestModalWindow testModalWindow;
-  public GUIController game;
+    void Start()
+    {
+        data = gameObject.GetComponent<Data>();
+        game = gameObject.GetComponent<PersistentGame>();
+
+        testModalWindow = gameObject.GetComponent<TestModalWindow>();
+    }
 
   private bool errorChecker(string err) {
     if (err == "falsePlayer" || err == "falseAttribute") {
@@ -28,15 +36,15 @@ public class EventStart : MonoBehaviour {
                     int number = Random.Range(100, 400);
                     if (incomingEvent["change"] == "positive")
                     {
-                        data.setPlayerNumericAttribute(game.curUnit.PlayerNumber, incomingEvent["name"], number);
+                        data.setPlayerNumericAttribute(game.getCurUnit().PlayerNumber, incomingEvent["name"], number);
                         testModalWindow.randomEventModal("Oh yes, "+decidedEvent+" You gained "+number+" soldiers.");
                     }
                     else
                     {
-                        data.setPlayerNumericAttribute(game.curUnit.PlayerNumber, incomingEvent["name"], -number);
+                        data.setPlayerNumericAttribute(game.getCurUnit().PlayerNumber, incomingEvent["name"], -number);
                         testModalWindow.randomEventModal("Oh no, " + decidedEvent + " You lost " + number + " soldiers.");
                     }
-                    Debug.Log("current soldiers" + data.getPlayerAttribute(game.curUnit.PlayerNumber, "soldiers"));
+                    Debug.Log("current soldiers" + data.getPlayerAttribute(game.getCurUnit().PlayerNumber, "soldiers"));
                     break;
                 default:
                     break;

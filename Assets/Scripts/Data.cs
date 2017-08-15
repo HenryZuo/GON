@@ -7,21 +7,23 @@ public class Data : MonoBehaviour {
 
 	private List<Dictionary<string, string>> gameData = new List<Dictionary<string, string>>();
 	private List<Dictionary<string, string>> available_generals = new List<Dictionary<string, string>>();
-	private List<Dictionary<string, string>> player1_generals = new List<Dictionary<string, string>>();
+	public List<Dictionary<string, string>> player1_generals = new List<Dictionary<string, string>>();
 	private List<Dictionary<string, string>> player2_generals = new List<Dictionary<string, string>>();
 	private List<Dictionary<string, string>> player3_generals = new List<Dictionary<string, string>>();
 	private List<Dictionary<string, string>> player4_generals = new List<Dictionary<string, string>>();
 	private List<Dictionary<string, string>> players = new List<Dictionary<string, string>>();
 
     public int soldiers = 3000;
-
-	public void initializeData() {
+	public int totalSoldiers = 10000;
+	public int wealth = 100000;
+    
+    public void initializeData() {
 		//instantiate game data
 		Dictionary<string, string> kings_landing = new Dictionary<string, string>{
 			{"name", "King's Landing"},
 			{"soldiers", "50000"},
 			{"wealth", "100000"},
-			{"owner", "Lanisters"},
+			{"owner", "Lannister"},
             {"type", "castle"}
 		};
 
@@ -29,7 +31,7 @@ public class Data : MonoBehaviour {
 			{"name", "Winterfell"},
 			{"soldiers", "20000"},
 			{"wealth", "10000"},
-			{"owner", "Starks"},
+			{"owner", "Stark"},
             {"type", "castle"}
         };
 
@@ -512,5 +514,17 @@ public class Data : MonoBehaviour {
 		gameData [pathLocation] ["wealth"] = (float.Parse(gameData [pathLocation] ["wealth"]) + number).ToString();
 		return true;
 	}
+
+    // placeholder function
+    public Dictionary<string, string> getKingsLanding()
+    {
+        return new Dictionary<string, string>{
+            {"name", "King's Landing"},
+            {"soldiers", "50000"},
+            {"wealth", "100000"},
+            {"owner", "Lannister"},
+            {"type", "castle"}
+        };
+    }
     
 }
