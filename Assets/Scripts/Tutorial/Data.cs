@@ -12,26 +12,150 @@ public class Data : MonoBehaviour {
 	private List<Dictionary<string, string>> player3_generals = new List<Dictionary<string, string>>();
 	private List<Dictionary<string, string>> player4_generals = new List<Dictionary<string, string>>();
 	private List<Dictionary<string, string>> players = new List<Dictionary<string, string>>();
-
-    public int soldiers = 3000;
+	private List<Dictionary<string, string>> random_events = new List<Dictionary<string, string>> ();
+	private List<Dictionary<string, string>> castles = new List<Dictionary<string, string>>();
 
 	public void initializeData() {
 		//instantiate game data
-		Dictionary<string, string> kings_landing = new Dictionary<string, string>{
-			{"name", "King's Landing"},
-			{"soldiers", "50000"},
-			{"wealth", "100000"},
-			{"owner", "Lanisters"},
-            {"type", "castle"}
+		Dictionary<string, string> high_garden = new Dictionary<string, string>{
+			{"name", "High Garden"},
+			{"soldiers", "30000"},
+			{"wealth", "50000"},
+			{"owner", "Tyrell"},
+			{"general", ""},
+			{"type", "castle"}
 		};
+		castles.Add (high_garden);
+
+		Dictionary<string, string> casterly_rock = new Dictionary<string, string>{
+			{"name", "Casterly Rock"},
+			{"soldiers", "10000"},
+			{"wealth", "40000"},
+			{"owner", "Lannister"},
+			{"general", ""},
+			{"type", "castle"}
+		};
+		castles.Add (casterly_rock);
+
+		Dictionary<string, string> riverrun = new Dictionary<string, string>{
+			{"name", "Riverrun"},
+			{"soldiers", "1000"},
+			{"wealth", "500"},
+			{"owner", "Lannister"},
+			{"general", ""},
+			{"type", "castle"}
+		};
+		castles.Add (riverrun);
+
+		Dictionary<string, string> iron_islands = new Dictionary<string, string>{
+			{"name", "The Iron Islands"},
+			{"soldiers", "2000"},
+			{"wealth", "100"},
+			{"owner", "Greyjoy"},
+			{"general", ""},
+			{"type", "castle"}
+		};
+		castles.Add (iron_islands);
+
+		Dictionary<string, string> the_twins = new Dictionary<string, string>{
+			{"name", "The Twins"},
+			{"soldiers", "40000"},
+			{"wealth", "300"},
+			{"owner", "Frey"},
+			{"general", ""},
+			{"type", "castle"}
+		};
+		castles.Add (the_twins);
+
+		Dictionary<string, string> dreadfort = new Dictionary<string, string>{
+			{"name", "The Dreadfort"},
+			{"soldiers", "15000"},
+			{"wealth", "2000"},
+			{"owner", "Starks"},
+			{"type", "castle"}
+		};
+		castles.Add (dreadfort);
+
+		Dictionary<string, string> castle_black = new Dictionary<string, string>{
+			{"name", "Castle Black"},
+			{"soldiers", "1000"},
+			{"wealth", "0"},
+			{"owner", "Starks"},
+			{"general", ""},
+			{"type", "castle"}
+		};
+		castles.Add (castle_black);
 
 		Dictionary<string, string> winterfell = new Dictionary<string, string>{
 			{"name", "Winterfell"},
 			{"soldiers", "20000"},
 			{"wealth", "10000"},
 			{"owner", "Starks"},
-            {"type", "castle"}
-        };
+			{"general", ""},
+			{"type", "castle"}
+		};
+		castles.Add (winterfell);
+
+		Dictionary<string, string> eyrie = new Dictionary<string, string>{
+			{"name", "The Eyrie"},
+			{"soldiers", "10000"},
+			{"wealth", "2500"},
+			{"owner", "?"},
+			{"general", ""},
+			{"type", "castle"}
+		};
+		castles.Add (eyrie);
+
+		Dictionary<string, string> harenhal = new Dictionary<string, string>{
+			{"name", "Harenhal"},
+			{"soldiers", "10000"},
+			{"wealth", "2500"},
+			{"owner", "Lannister"},
+			{"general", ""},
+			{"type", "castle"}
+		};
+		castles.Add (harenhal);
+
+		Dictionary<string, string> dragonstone = new Dictionary<string, string>{
+			{"name", "Dragonstone"},
+			{"soldiers", "10000"},
+			{"wealth", "2500"},
+			{"owner", "The Vale"},
+			{"general", ""},
+			{"type", "castle"}
+		};
+		castles.Add (dragonstone);
+
+		Dictionary<string, string> storms_end = new Dictionary<string, string>{
+			{"name", "Storm's End"},
+			{"soldiers", "10000"},
+			{"wealth", "2500"},
+			{"owner", "?"},
+			{"general", ""},
+			{"type", "castle"}
+		};
+		castles.Add (storms_end);
+
+		Dictionary<string, string> kings_landing = new Dictionary<string, string>{
+			{"name", "King's Landing"},
+			{"soldiers", "50000"},
+			{"wealth", "100000"},
+			{"owner", "Lanisters"},
+			{"general", ""},
+			{"type", "castle"}
+		};
+		castles.Add (kings_landing);
+
+		Dictionary<string, string> sunspear = new Dictionary<string, string>{
+			{"name", "Sunspear"},
+			{"soldiers", "50000"},
+			{"wealth", "100000"},
+			{"owner", "Tyrell"},
+			{"general", ""},
+			{"type", "castle"}
+		};
+		castles.Add (sunspear);
+
 
         Dictionary<string, string> lose_soldiers = new Dictionary<string, string>{
             {"name", "soldiers"},
@@ -75,15 +199,181 @@ public class Data : MonoBehaviour {
 					   "Your people are blessed with a great harvest. You trade away the excess food!,"},
 			{"type", "random"}
 		};
-        gameData.Add(lose_soldiers);
-        gameData.Add(gain_soldiers);
-        gameData.Add(lose_wealth);
-        gameData.Add(lose_soldiers);
-        gameData.Add(gain_soldiers);
-        gameData.Add(lose_soldiers);
-        gameData.Add(lose_wealth);
-        gameData.Add (kings_landing);
-		gameData.Add (winterfell);
+
+		Dictionary<string, string> tavern = new Dictionary<string, string>{
+			{"name", "tavern"},
+			{"change", "neutral"},
+			{"events", ""},
+			{"type", "tavern"}
+		};
+
+		Dictionary<string, string> hospital = new Dictionary<string, string>{
+			{"name", "hospital"},
+			{"change", "positive"},
+			{"events", ""},
+			{"type", "hospital"}
+		};
+
+
+		//mill and stables, maybe some houses
+		Dictionary<string, string> town = new Dictionary<string, string>{
+			{"name", "town"},
+			{"change", "positive"},
+			{"events", "roll again"},
+			{"type", "town"}
+		};
+
+		Dictionary<string, string> bank = new Dictionary<string, string>{
+			{"name", "bank"},
+			{"change", "neutral"},
+			{"events", ""},
+			{"type", "bank"}
+		};
+
+		Dictionary<string, string> citadel = new Dictionary<string, string>{
+			{"name", "general"},
+			{"change", "positive"},
+			{"events", ""},
+			{"type", "citadel"}
+		};
+
+		Dictionary<string, string> soldier_camp = new Dictionary<string, string>{
+			{"name", "soldiers"},
+			{"change", "positive"},
+			{"events", ""},
+			{"type", "soldier_camp"}
+		};
+
+		Dictionary<string, string> mystery_positive_wealth = new Dictionary<string, string>{
+			{"name", "wealth"},
+			{"change", "positive"},
+			{"events", "Your men find ancient ruins filled with wealth!"},
+			{"type", "mystery"}
+		};
+
+		Dictionary<string, string> mystery_negative_generals = new Dictionary<string, string>{
+			{"name", "generals"},
+			{"change", "negative"},
+			{"events", "One of your generals overdoses on seed of the poppy and dies!"},
+			{"type", "mystery"}
+		};
+
+		Dictionary<string, string> blacksmith = new Dictionary<string, string>{
+			{"name", "weapon"},
+			{"change", "positive"},
+			{"events", ""},
+			{"type", "blacksmith"}
+		};
+
+		Dictionary<string, string> random = new Dictionary<string, string>{
+			{"name", "random"},
+			{"change", "random"},
+			{"events", ""},
+			{"type", "random"}
+		};
+
+		random_events.Add(lose_soldiers, gain_soldiers, lose_wealth, gain_wealth, mystery_positive_wealth, mystery_negative_generals);
+
+        gameData.Add(random);
+		gameData.Add(random);
+		gameData.Add(high_garden);
+		gameData.Add(high_garden);
+		for (var i = 0; i < 9; i++) {
+			gameData.Add(random);
+		}
+		gameData.Add(casterly_rock);
+		gameData.Add(casterly_rock);
+		gameData.Add(random);
+		gameData.Add(random);
+		gameData.Add(random);
+		gameData.Add(town);
+		for (var i = 0; i < 4; i++) {
+			gameData.Add(random);
+		}
+		gameData.Add(riverrun);
+		gameData.Add(random);
+		gameData.Add(riverrun);
+		gameData.Add(riverrun);
+		gameData.Add(iron_islands);
+		gameData.Add(random);
+		gameData.Add(random);
+		gameData.Add(random);
+		gameData.Add(tavern);
+		gameData.Add(random);
+		gameData.Add(the_twins);
+		gameData.Add(random);
+		gameData.Add(the_twins);
+		for (var i = 0; i < 7; i++) {
+			gameData.Add(random);
+		}
+		gameData.Add(tavern);
+		gameData.Add(random);
+		gameData.Add(tavern);
+		for (var i = 0; i < 6; i++) {
+			gameData.Add(random);
+		}
+		gameData.Add(dreadfort);
+		gameData.Add(random);
+		gameData.Add(dreadfort);
+		gameData.Add(random);
+		gameData.Add(random);
+		gameData.Add(random);
+		gameData.Add(random);
+		gameData.Add(random);
+		gameData.Add(castle_black);
+		gameData.Add(castle_black);
+		gameData.Add(castle_black);
+		gameData.Add(random);
+		gameData.Add(random);
+		gameData.Add(winterfell);
+		gameData.Add(winterfell);
+		gameData.Add(random);
+		gameData.Add(winterfell);
+		gameData.Add(winterfell);
+		gameData.Add(random);
+		gameData.Add(winterfell);
+		for (var i = 0; i < 7; i++) {
+			gameData.Add(random);
+		}
+		gameData.Add(town);
+		gameData.Add(random);
+		gameData.Add(random);
+		gameData.Add(random);
+		gameData.Add(random);
+		gameData.Add(tavern);
+		gameData.Add(random);
+		gameData.Add(random);
+		gameData.Add(the_twins);
+		gameData.Add(random);
+		gameData.Add(the_twins);
+		gameData.Add(random);
+		gameData.Add(random);
+		gameData.Add(eyrie);
+		gameData.Add(random);
+		gameData.Add(town);
+		gameData.Add(random);
+		gameData.Add(harenhal);
+		gameData.Add(random);
+		gameData.Add(harenhal);
+		gameData.Add(random);
+		gameData.Add(random);
+		gameData.Add(kings_landing);
+		gameData.Add(dragonstone);
+		gameData.Add(kings_landing);
+		gameData.Add(kings_landing);
+		gameData.Add(kings_landing);
+		gameData.Add(storms_end);
+		gameData.Add(kings_landing);
+		gameData.Add(random);
+		gameData.Add(town);
+		gameData.Add(random);
+		gameData.Add(town);
+		gameData.Add(tavern);
+		gameData.Add(random);
+		gameData.Add(town);
+		gameData.Add(random);
+		gameData.Add(town);
+		gameData.Add(sunspear);
 
 		//instantiate generals
 		Dictionary<string, string> ned = new Dictionary<string, string> {
@@ -489,28 +779,36 @@ public class Data : MonoBehaviour {
 		return gameData [pathLocation];
 	}
 
-	public string getSoldiers(int pathLocation) {
-		return gameData [pathLocation] ["soldiers"];
-	}
-
-	public bool setSoldiers(int pathLocation, int number) {
-		if (float.Parse(gameData [pathLocation] ["soldiers"]) + number < 0) {
-			return false;
+	public string getCastleAttribute(string name, string attribute) {
+		for (var i = 0; i < castles.Count; i++) {
+			if (castles [i] ["name"] == name) {
+				return castles [i] [attribute];
+			}
 		}
-		gameData [pathLocation] ["soldiers"] = (float.Parse(gameData [pathLocation] ["soldiers"]) + number).ToString();
-		return true;
+		return null;
 	}
 
-	public string getWealth(int pathLocation) {
-		return gameData [pathLocation] ["wealth"];
-	}
-
-	public bool setWealth(int pathLocation, int number) {
-		if (float.Parse(gameData [pathLocation] ["wealth"]) + number < 0) {
-			return false;
+	public bool setCastleNumericAttribute (string name, string attribute, int number) {
+		for (var i = 0; i < castles.Count; i++) {
+			if (castles [i] ["name"] == name) {
+				castles [i] [attribute] = (float.Parse (castles [i] [attribute]) + number).ToString ();
+				return true;
+			}
 		}
-		gameData [pathLocation] ["wealth"] = (float.Parse(gameData [pathLocation] ["wealth"]) + number).ToString();
-		return true;
+		return false;
+	}
+
+	public bool setCastleAttribute(string name, string attribute, string value) {
+		for (var i = 0; i < castles.Count; i++) {
+			if (castles [i] ["name"] == name) {
+				castles [i] [attribute] = value;
+				return true;
+			}
+		}
+		return false;
 	}
     
+	public string getRandomEvent() {
+		return random_events[UnityEngine.Random.Range (0, random_events.Count)];
+	}
 }
