@@ -48,7 +48,6 @@ public class PersistentGame : MonoBehaviour
         CellGrid = CellGridObj.GetComponent<CellGrid>();
 
         CanvasObj = GameObject.Find("Canvas");
-        Debug.Log("CanvasObj: " + CanvasObj);
         canvas = CanvasObj.GetComponent<Canvas>();
 
         eventStart = gameObject.GetComponent<EventStart>();
@@ -219,6 +218,8 @@ public class PersistentGame : MonoBehaviour
     {
         if(curUnit == null)
         {
+            UnitsParentObj = GameObject.Find("Units Parent");
+            UnitsParent = UnitsParentObj.transform;
             curUnit = UnitsParent.GetChild(0).GetComponent<Unit>();
             return curUnit;
         } else

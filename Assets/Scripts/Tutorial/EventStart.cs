@@ -28,7 +28,6 @@ public class EventStart : MonoBehaviour {
         {
             string[] possibleEvents = incomingEvent["events"].Split(',');
             string decidedEvent = possibleEvents[Random.Range(0, possibleEvents.Length)];
-            Debug.Log(decidedEvent);
 
             switch (incomingEvent["name"])
             {
@@ -44,7 +43,6 @@ public class EventStart : MonoBehaviour {
                         data.setPlayerNumericAttribute(game.getCurUnit().PlayerNumber, incomingEvent["name"], -number);
                         testModalWindow.randomEventModal("Oh no, " + decidedEvent + " You lost " + number + " soldiers.");
                     }
-                    Debug.Log("current soldiers" + data.getPlayerAttribute(game.getCurUnit().PlayerNumber, "soldiers"));
                     break;
                 default:
                     break;
@@ -68,6 +66,5 @@ public class EventStart : MonoBehaviour {
           data.setPlayerNumericAttribute (0, "wealth", -100);
           break;
     }
-    Debug.Log("Wealth: " + data.getPlayerAttribute(0, "wealth"));
   }
 }
