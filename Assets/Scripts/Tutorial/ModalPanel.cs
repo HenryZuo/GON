@@ -56,7 +56,7 @@ public class ModalPanel : MonoBehaviour {
     void ClosePanel()
     {
         modalPanelObject.SetActive(false);
-        guiController.endTurn();
+        guiController.EndTurn();
     }
     
 }

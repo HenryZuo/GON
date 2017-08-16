@@ -3,15 +3,15 @@ using System.Collections;
 
 public class CameraController : MonoBehaviour
 {
-    private GameObject DataObj;
-    private PersistentGame persistentGame;     //Public variable to store a reference to the player game object
+    private GameObject GUIControllerObj;
+    private GUIController guiController;     //Public variable to store a reference to the player game object
     
     // Use this for initialization
     void Start()
     {
-        DataObj = GameObject.Find("DataObj");
-        persistentGame = DataObj.GetComponent<PersistentGame>();
-        transform.position = persistentGame.getCurUnit().transform.position + new Vector3(0, -10, -9);
+        GUIControllerObj = GameObject.Find("GUI Controller");
+        guiController = GUIControllerObj.GetComponent<GUIController>();
+        //transform.position = guiController.getCurUnit().transform.position + new Vector3(0, -10, -9);
         gameObject.GetComponent<Camera>().fieldOfView = 26;
     }
 
@@ -21,7 +21,7 @@ public class CameraController : MonoBehaviour
         // Set the position of the camera's transform to be the same as the player's, but offset by the calculated offset distance.
         try
         {
-            transform.position = persistentGame.getCurUnit().transform.position + new Vector3(0, -10, -9);
+            transform.position = guiController.getCurUnit().transform.position + new Vector3(0, -10, -9);
         }
         catch (System.NullReferenceException e)
         {

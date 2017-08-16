@@ -16,6 +16,6 @@ public class EndTurn : MonoBehaviour
 	void TaskOnClick()
 	{
 		Debug.Log("You have clicked the button!");
-		Controller.endTurn();
+		Controller.EndTurn();
 	}
 }

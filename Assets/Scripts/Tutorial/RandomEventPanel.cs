@@ -41,6 +41,6 @@ public class RandomEventPanel : MonoBehaviour
     void CloseNotification()
     {
         randomEventPanelObj.SetActive(false);
-        guiController.endTurn();
+        guiController.EndTurn();
     }
 }

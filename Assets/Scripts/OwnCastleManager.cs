@@ -10,7 +10,7 @@ public class OwnCastleManager : MonoBehaviour {
 	private GameObject DataObj;
 
 	private Data data;
-    private PersistentGame persistentGame;
+    private GUIController guiController;
 
     // player stats
     private int curPlayer;
@@ -40,15 +40,16 @@ public class OwnCastleManager : MonoBehaviour {
     
     
     void Awake(){
-        DataObj = GameObject.Find("DataObj");
+        DataObj = GameObject.Find("GUI Controller");
+        Debug.Log("DataObj: " + DataObj);
         data = DataObj.GetComponent<Data>();
-        persistentGame = DataObj.GetComponent<PersistentGame>();
+        guiController = DataObj.GetComponent<GUIController>();
 
-        curPlayer = persistentGame.getPlayerNum();
+        curPlayer = guiController.getPlayerNum();
         soldiersPlayer = int.Parse(data.getPlayerAttribute(curPlayer, "soldiers"));
         wealthPlayer = int.Parse(data.getPlayerAttribute(curPlayer, "wealth"));
 
-        curCastle = data.getEvent(persistentGame.getCurUnit().PathLocation);
+        curCastle = data.getEvent(guiController.getCurUnit().PathLocation);
         
         // start castle name
         nameCastleText = GameObject.Find("nameCastle Text").GetComponent<Text>();
@@ -121,7 +122,7 @@ public class OwnCastleManager : MonoBehaviour {
         {
             data.setPlayerNumericAttribute(curPlayer, "soldiers", 0 - soldierChangeCastle);
             data.setPlayerNumericAttribute(curPlayer, "wealth", 0 - wealthChangeCastle);
-            persistentGame.updatePlayerUI();
+            guiController.updatePlayerUI();
             data.setCastleNumericAttribute(curCastle["name"], "soldiers", (int)Math.Ceiling(soldierSlider.value));
             data.setCastleNumericAttribute(curCastle["name"], "wealth", (int)Math.Ceiling(wealthSlider.value));
             SceneManager.LoadScene(1);
