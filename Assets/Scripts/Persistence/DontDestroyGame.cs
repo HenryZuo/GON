@@ -4,17 +4,30 @@ using UnityEngine;
 
 public class DontDestroyGame : MonoBehaviour
 {
-
-    //void Awake(){
-    //	DontDestroyOnLoad (gameObject);
+    public static DontDestroyGame instance = null;
+    //void Awake()
+    //{
+    //    DontDestroyOnLoad(gameObject);
     //}
-    void Awake()
-    {
-        DontDestroyOnLoad(gameObject);
+    //void Awake()
+    //{
+    //    DontDestroyOnLoad(gameObject);
 
-        if (FindObjectsOfType(GetType()).Length > 1)
+    //    if (FindObjectsOfType(GetType()).Length > 1)
+    //    {
+    //        Destroy(gameObject);
+    //    }
+    //}
+    private void Awake()
+    {
+        if (instance == null)
         {
-            Destroy(gameObject);
+            instance = this;
         }
+        else if (instance != this)
+        { Destroy(gameObject); }
+
+        //Sets this to not be destroyed when reloading scene
+        DontDestroyOnLoad(gameObject);
     }
 }

@@ -31,10 +31,10 @@ public class PersistentGame : MonoBehaviour
 
     private Boolean initialized = false;
 
-    void Awake()
+    public void GUIStart()
     {
         UnitsParentObj = GameObject.Find("Units Parent");
-        UnitsParent = UnitsParentObj.transform;
+        //UnitsParent = UnitsParentObj.transform;
 
         DataObj = GameObject.Find("DataObj");
         Data = DataObj.GetComponent<Data>();
@@ -57,11 +57,6 @@ public class PersistentGame : MonoBehaviour
         {
             startGame();
         }
-    }
-
-    public void GUIStart()
-    {     
-        
     }
     
 
@@ -132,6 +127,7 @@ public class PersistentGame : MonoBehaviour
         Data.initializeData();
         Path = CellGrid.generatePath();
         DiceText.text = "";
+        UnitsParent = UnitsParentObj.transform;
         for (int i = 0; i < UnitsParent.childCount; i++)
         {
             var child = UnitsParent.GetChild(i).GetComponent<Unit>();
@@ -144,7 +140,7 @@ public class PersistentGame : MonoBehaviour
             curUnit.Move(startCell, pp);
             curUnit.PathLocation = randomIndex;
         }
-        // curUnit = units[0];
+        curUnit = units[0];
         updatePlayerUI();
         initialized = true;
     }

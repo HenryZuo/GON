@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class SampleUnit : Unit
 {
-    //public Color LeadingColor;
-    // public Transform CellGrid;
-    //private int dice;
-    
+    public Color LeadingColor;
+
     public override void Initialize()
     {
         base.Initialize();
-        // transform.position += new Vector3(0, 0, -1);
-        //GetComponent<Renderer>().material.color = LeadingColor;
+        transform.position += new Vector3(0, 0, -1);
+        GetComponent<Renderer>().material.color = LeadingColor;
     }
     public override void MarkAsAttacking(Unit other)
     {      
