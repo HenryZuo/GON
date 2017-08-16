@@ -43,7 +43,7 @@ public class EventStart : MonoBehaviour {
                 }
                 break;
             case "castle":
-                SceneManager.LoadScene(2);
+                Invoke("goToCastle", game.getDiceRoll() * 0.2f);                
                 break;
             default:
                 Debug.Log("event type not available");
@@ -55,4 +55,10 @@ public class EventStart : MonoBehaviour {
     //TODO: check if path location exists
     handleEvent(data.getEvent(pathLocation));
     }
+
+    public void goToCastle()
+    {
+        SceneManager.LoadScene(2);
+    }
+    
 }

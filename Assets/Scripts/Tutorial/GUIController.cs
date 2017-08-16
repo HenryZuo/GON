@@ -30,6 +30,7 @@ public class GUIController : MonoBehaviour
     private List<Cell> Path = new List<Cell>();
 
     private Boolean initialized = false;
+    private int diceRoll;
 
     public void Start()
     {
@@ -63,7 +64,7 @@ public class GUIController : MonoBehaviour
 
     public void Move()
     {
-        int diceRoll = UnityEngine.Random.Range(1, 7);
+        diceRoll = UnityEngine.Random.Range(1, 7);
         displayManager.DisplayDiceRoll("You rolled a " + diceRoll.ToString());
 
         int NewLocation = curUnit.PathLocation + diceRoll;
@@ -217,6 +218,11 @@ public class GUIController : MonoBehaviour
     public int getPlayerNum()
     {
         return curPlayer;
+    }
+
+    public int getDiceRoll()
+    {
+        return diceRoll;
     }
 
 }
