@@ -16,144 +16,173 @@ public class Data : MonoBehaviour {
 	private List<Dictionary<string, string>> castles = new List<Dictionary<string, string>>();
 
 	public void initializeData() {
-		//instantiate game data
-		Dictionary<string, string> high_garden = new Dictionary<string, string>{
+        //instantiate game data
+        Dictionary<string, string> high_garden = new Dictionary<string, string>{
 			{"name", "High Garden"},
-			{"soldiers", "30000"},
-			{"wealth", "50000"},
+			{"soldiers", "3000"},
+			{"wealth", "5000"},
 			{"owner", "Tyrell"},
 			{"general", ""},
-			{"type", "castle"}
-		};
+			{"type", "castle"},
+            {"max_soldiers", "20000" },
+            {"max_wealth", "20000" },
+
+        };
 		castles.Add (high_garden);
 
 		Dictionary<string, string> casterly_rock = new Dictionary<string, string>{
 			{"name", "Casterly Rock"},
-			{"soldiers", "10000"},
-			{"wealth", "40000"},
+			{"soldiers", "1000"},
+			{"wealth", "4000"},
 			{"owner", "Lannister"},
 			{"general", ""},
-			{"type", "castle"}
-		};
+			{"type", "castle"},
+            {"max_soldiers", "20000" },
+            {"max_wealth", "20000" },
+        };
 		castles.Add (casterly_rock);
 
 		Dictionary<string, string> riverrun = new Dictionary<string, string>{
 			{"name", "Riverrun"},
-			{"soldiers", "1000"},
-			{"wealth", "500"},
+			{"soldiers", "100"},
+			{"wealth", "50"},
 			{"owner", "Lannister"},
 			{"general", ""},
-			{"type", "castle"}
-		};
+			{"type", "castle"},
+            {"max_soldiers", "20000" },
+            {"max_wealth", "20000" },
+        };
 		castles.Add (riverrun);
 
 		Dictionary<string, string> iron_islands = new Dictionary<string, string>{
 			{"name", "The Iron Islands"},
-			{"soldiers", "2000"},
-			{"wealth", "100"},
+			{"soldiers", "200"},
+			{"wealth", "10"},
 			{"owner", "Greyjoy"},
 			{"general", ""},
-			{"type", "castle"}
-		};
+			{"type", "castle"},
+            {"max_soldiers", "20000" },
+            {"max_wealth", "20000" },
+        };
 		castles.Add (iron_islands);
 
 		Dictionary<string, string> the_twins = new Dictionary<string, string>{
 			{"name", "The Twins"},
-			{"soldiers", "40000"},
-			{"wealth", "300"},
+			{"soldiers", "4000"},
+			{"wealth", "30"},
 			{"owner", "Frey"},
 			{"general", ""},
-			{"type", "castle"}
-		};
+			{"type", "castle"},
+            {"max_soldiers", "20000" },
+            {"max_wealth", "20000" },
+        };
 		castles.Add (the_twins);
 
 		Dictionary<string, string> dreadfort = new Dictionary<string, string>{
 			{"name", "The Dreadfort"},
-			{"soldiers", "15000"},
-			{"wealth", "2000"},
+			{"soldiers", "1500"},
+			{"wealth", "200"},
 			{"owner", "Starks"},
-			{"type", "castle"}
-		};
+			{"type", "castle"},
+            {"max_soldiers", "20000" },
+            {"max_wealth", "20000" },
+        };
 		castles.Add (dreadfort);
 
 		Dictionary<string, string> castle_black = new Dictionary<string, string>{
 			{"name", "Castle Black"},
-			{"soldiers", "1000"},
+			{"soldiers", "100"},
 			{"wealth", "0"},
 			{"owner", "Starks"},
 			{"general", ""},
-			{"type", "castle"}
-		};
+			{"type", "castle"},
+            {"max_soldiers", "20000" },
+            {"max_wealth", "20000" },
+        };
 		castles.Add (castle_black);
 
 		Dictionary<string, string> winterfell = new Dictionary<string, string>{
 			{"name", "Winterfell"},
-			{"soldiers", "20000"},
-			{"wealth", "10000"},
+			{"soldiers", "2000"},
+			{"wealth", "1000"},
 			{"owner", "Starks"},
 			{"general", ""},
-			{"type", "castle"}
-		};
+			{"type", "castle"},
+            {"max_soldiers", "20000" },
+            {"max_wealth", "20000" },
+        };
 		castles.Add (winterfell);
 
 		Dictionary<string, string> eyrie = new Dictionary<string, string>{
 			{"name", "The Eyrie"},
-			{"soldiers", "10000"},
-			{"wealth", "2500"},
+			{"soldiers", "1000"},
+			{"wealth", "250"},
 			{"owner", "?"},
 			{"general", ""},
-			{"type", "castle"}
-		};
+			{"type", "castle"},
+            {"max_soldiers", "20000" },
+            {"max_wealth", "20000" },
+        };
 		castles.Add (eyrie);
 
 		Dictionary<string, string> harenhal = new Dictionary<string, string>{
 			{"name", "Harenhal"},
-			{"soldiers", "10000"},
-			{"wealth", "2500"},
+			{"soldiers", "1000"},
+			{"wealth", "250"},
 			{"owner", "Lannister"},
 			{"general", ""},
-			{"type", "castle"}
-		};
+			{"type", "castle"},
+            {"max_soldiers", "20000" },
+            {"max_wealth", "20000" },
+        };
 		castles.Add (harenhal);
 
 		Dictionary<string, string> dragonstone = new Dictionary<string, string>{
 			{"name", "Dragonstone"},
-			{"soldiers", "10000"},
-			{"wealth", "2500"},
+			{"soldiers", "1000"},
+			{"wealth", "250"},
 			{"owner", "The Vale"},
 			{"general", ""},
-			{"type", "castle"}
-		};
+			{"type", "castle"},
+            {"max_soldiers", "20000" },
+            {"max_wealth", "20000" },
+        };
 		castles.Add (dragonstone);
 
 		Dictionary<string, string> storms_end = new Dictionary<string, string>{
 			{"name", "Storm's End"},
-			{"soldiers", "10000"},
-			{"wealth", "2500"},
+			{"soldiers", "1000"},
+			{"wealth", "250"},
 			{"owner", "?"},
 			{"general", ""},
-			{"type", "castle"}
-		};
+			{"type", "castle"},
+            {"max_soldiers", "20000" },
+            {"max_wealth", "20000" },
+        };
 		castles.Add (storms_end);
 
 		Dictionary<string, string> kings_landing = new Dictionary<string, string>{
 			{"name", "King's Landing"},
-			{"soldiers", "50000"},
-			{"wealth", "100000"},
+			{"soldiers", "5000"},
+			{"wealth", "10000"},
 			{"owner", "Lanisters"},
 			{"general", ""},
-			{"type", "castle"}
-		};
+			{"type", "castle"},
+            {"max_soldiers", "20000" },
+            {"max_wealth", "20000" },
+        };
 		castles.Add (kings_landing);
 
 		Dictionary<string, string> sunspear = new Dictionary<string, string>{
 			{"name", "Sunspear"},
-			{"soldiers", "50000"},
-			{"wealth", "100000"},
+			{"soldiers", "5000"},
+			{"wealth", "10000"},
 			{"owner", "Tyrell"},
 			{"general", ""},
-			{"type", "castle"}
-		};
+			{"type", "castle"},
+            {"max_soldiers", "20000" },
+            {"max_wealth", "20000" },
+        };
 		castles.Add (sunspear);
 
 

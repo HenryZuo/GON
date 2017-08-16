@@ -112,5 +112,5 @@ namespace Assets.FantasyHeroes.Scripts
                 ReplaceSprite(part, texture);
             }
         }
-    }
+    }    
 }

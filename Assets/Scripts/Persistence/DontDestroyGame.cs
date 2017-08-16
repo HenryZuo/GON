@@ -10,7 +10,7 @@ public class DontDestroyGame : MonoBehaviour
     //}
     void Awake()
     {
-        DontDestroyOnLoad(this);
+        DontDestroyOnLoad(gameObject);
 
         if (FindObjectsOfType(GetType()).Length > 1)
         {

@@ -13,10 +13,10 @@ public class GUIController : MonoBehaviour
     {
         DataObj = GameObject.Find("DataObj");
         persistentGame = DataObj.GetComponent<PersistentGame>();
-        persistentGame.GUIStart();
     }
     
-	public void Move(){
+	public void Move()
+    {
         persistentGame.GUIMove();        
     }
     	

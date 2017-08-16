@@ -11,7 +11,8 @@ public class CameraController : MonoBehaviour
     {
         DataObj = GameObject.Find("DataObj");
         persistentGame = DataObj.GetComponent<PersistentGame>();
-        transform.position = persistentGame.getCurUnit().transform.position + new Vector3(0, -14, -36);
+        transform.position = persistentGame.getCurUnit().transform.position + new Vector3(0, -10, -9);
+        gameObject.GetComponent<Camera>().fieldOfView = 26;
     }
 
     // LateUpdate is called after Update each frame
@@ -20,7 +21,7 @@ public class CameraController : MonoBehaviour
         // Set the position of the camera's transform to be the same as the player's, but offset by the calculated offset distance.
         try
         {
-            transform.position = persistentGame.getCurUnit().transform.position + new Vector3(0, -14, -36);
+            transform.position = persistentGame.getCurUnit().transform.position + new Vector3(0, -10, -9);
         }
         catch (System.NullReferenceException e)
         {

@@ -130,12 +130,12 @@ public abstract class Unit : MonoBehaviour
     /// <summary>
     /// Method is called when units HP drops below 1.
     /// </summary>
-    protected virtual void OnDestroyed()
-    {
-        Cell.IsTaken = false;
-        MarkAsDestroyed();
-        Destroy(gameObject);
-    }
+    //protected virtual void OnDestroyed()
+    //{
+    //    Cell.IsTaken = false;
+    //    MarkAsDestroyed();
+    //    Destroy(gameObject);
+    //}
     
     /// <summary>
     /// Method is called when unit is selected.
@@ -199,12 +199,12 @@ public abstract class Unit : MonoBehaviour
         if (UnitAttacked != null)
             UnitAttacked.Invoke(this, new AttackEventArgs(other, this, damage));
 
-        if (HitPoints <= 0)
-        {
-            if (UnitDestroyed != null)
-                UnitDestroyed.Invoke(this, new AttackEventArgs(other, this, damage));
-            OnDestroyed();
-        }
+        //if (HitPoints <= 0)
+        //{
+        //    if (UnitDestroyed != null)
+        //        UnitDestroyed.Invoke(this, new AttackEventArgs(other, this, damage));
+        //    OnDestroyed();
+        //}
     }
 
     public virtual void Move(Cell destinationCell, List<Cell> path)

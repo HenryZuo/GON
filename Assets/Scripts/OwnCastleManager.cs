@@ -48,18 +48,8 @@ public class OwnCastleManager : MonoBehaviour {
         soldiersPlayer = int.Parse(data.getPlayerAttribute(curPlayer, "soldiers"));
         wealthPlayer = int.Parse(data.getPlayerAttribute(curPlayer, "wealth"));
 
-        // curCastle = data.getEvent(persistentGame.getCurUnit().PathLocation);
-        curCastle = new Dictionary<string, string>{
-            {"name", "King's Landing"},
-            {"soldiers", "5000"},
-            {"wealth", "3000"},
-            {"owner", "Lannister"},
-            {"general", "Andrew Ong" },
-            {"max_soldiers", "20000" },
-            {"max_wealth", "20000" },
-            {"type", "castle"}
-        };
-
+        curCastle = data.getEvent(persistentGame.getCurUnit().PathLocation);
+        
         // start castle name
         nameCastleText = GameObject.Find("nameCastle Text").GetComponent<Text>();
         nameCastleText.text = curCastle["name"];
@@ -111,6 +101,11 @@ public class OwnCastleManager : MonoBehaviour {
         }
     }
 
+    public void onGeneralDropdownChange()
+    {
+        generalCastleText.text = generals.itemText.text;
+    }
+
     public int getToll( float castleWealth )
     {
         return (int) Math.Ceiling(Math.Max(100, castleWealth * 0.2));
@@ -127,8 +122,8 @@ public class OwnCastleManager : MonoBehaviour {
             data.setPlayerNumericAttribute(curPlayer, "soldiers", 0 - soldierChangeCastle);
             data.setPlayerNumericAttribute(curPlayer, "wealth", 0 - wealthChangeCastle);
             persistentGame.updatePlayerUI();
-            //data.setCastleAttribute(curCastle["name"], "soldiers", (int)Math.Ceiling(soldierSlider.value));
-            //data.setCastleAttribute(curCastle["name"], "wealth", (int)Math.Ceiling(wealthSlider.value));
+            data.setCastleNumericAttribute(curCastle["name"], "soldiers", (int)Math.Ceiling(soldierSlider.value));
+            data.setCastleNumericAttribute(curCastle["name"], "wealth", (int)Math.Ceiling(wealthSlider.value));
             SceneManager.LoadScene(1);
         }
         

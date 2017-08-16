@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class EventStart : MonoBehaviour {
     
@@ -47,24 +48,15 @@ public class EventStart : MonoBehaviour {
                 default:
                     break;
             }
-        }  
-  }
+        }
+        if (incomingEvent["type"] == "castle")
+        {
+            SceneManager.LoadScene(2);
+        }
+        }
 
   public void createEvent(int pathLocation) {
-        //TODO: check if path location exists
-    switch (pathLocation) {
-        case 1:
-        case 2:
-        case 3:
-        case 4:
-        case 5:
-        case 6:
-            handleEvent(data.getEvent(pathLocation));
-            break;
-        default:
-          testModalWindow.TestYesNoCancel();
-          data.setPlayerNumericAttribute (0, "wealth", -100);
-          break;
+    //TODO: check if path location exists
+    handleEvent(data.getEvent(pathLocation));
     }
-  }
 }

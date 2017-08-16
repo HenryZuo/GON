@@ -31,12 +31,7 @@ public class PersistentGame : MonoBehaviour
 
     private Boolean initialized = false;
 
-    void Start()
-    {
-        
-    }
-
-    public void GUIStart()
+    void Awake()
     {
         UnitsParentObj = GameObject.Find("Units Parent");
         UnitsParent = UnitsParentObj.transform;
@@ -61,8 +56,12 @@ public class PersistentGame : MonoBehaviour
         else
         {
             startGame();
-            initialized = true;
         }
+    }
+
+    public void GUIStart()
+    {     
+        
     }
     
 
@@ -70,7 +69,6 @@ public class PersistentGame : MonoBehaviour
     {
         int diceRoll = UnityEngine.Random.Range(1, 7);
         displayManager.DisplayDiceRoll("You rolled a " + diceRoll.ToString());
-        // DiceText.text = diceRoll.ToString();
 
         int NewLocation = curUnit.PathLocation + diceRoll;
         if (NewLocation > 117)
@@ -146,8 +144,9 @@ public class PersistentGame : MonoBehaviour
             curUnit.Move(startCell, pp);
             curUnit.PathLocation = randomIndex;
         }
-        curUnit = units[0];
+        // curUnit = units[0];
         updatePlayerUI();
+        initialized = true;
     }
 
     public void resumeGame()
@@ -216,17 +215,7 @@ public class PersistentGame : MonoBehaviour
 
     public Unit getCurUnit()
     {
-        if(curUnit == null)
-        {
-            UnitsParentObj = GameObject.Find("Units Parent");
-            UnitsParent = UnitsParentObj.transform;
-            curUnit = UnitsParent.GetChild(0).GetComponent<Unit>();
-            return curUnit;
-        } else
-        {
-            return curUnit;
-
-        }
+       return curUnit;
     }
 
     public int getPlayerNum()

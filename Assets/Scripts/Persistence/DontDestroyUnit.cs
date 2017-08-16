@@ -10,11 +10,8 @@ public class DontDestroyUnit : MonoBehaviour
     //}
     void Awake()
     {
-        DontDestroyOnLoad(this);
-
-        Debug.Log("length in dont destroy unit: " + FindObjectsOfType(GetType()).Length);
-
-        if (FindObjectsOfType(GetType()).Length > 1)
+        DontDestroyOnLoad(this.GetComponent<Unit>());
+        if (FindObjectsOfType(GetType()).Length > 4)
         {
             Destroy(gameObject);
         }
