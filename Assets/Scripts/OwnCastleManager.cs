@@ -126,7 +126,7 @@ public class OwnCastleManager : MonoBehaviour {
             data.setCastleNumericAttribute(curCastle["name"], "soldiers", (int)Math.Ceiling(soldierSlider.value));
             data.setCastleNumericAttribute(curCastle["name"], "wealth", (int)Math.Ceiling(wealthSlider.value));
             SceneManager.LoadScene(1);
-        }
-        
+            guiController.EndTurn();
+        }        
     }
 }

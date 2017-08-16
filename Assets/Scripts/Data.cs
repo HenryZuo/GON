@@ -810,7 +810,7 @@ public class Data : MonoBehaviour {
 
 	//map tile get/set function
 	public Dictionary<string, string> getEvent(int pathLocation) {
-		return gameData [pathLocation];
+        return gameData [pathLocation];
 	}
 
 	public string getCastleAttribute(string name, string attribute) {

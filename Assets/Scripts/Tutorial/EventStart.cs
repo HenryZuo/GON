@@ -6,14 +6,13 @@ using UnityEngine.SceneManagement;
 public class EventStart : MonoBehaviour {
     
   private Data data;
-    private PersistentGame game;
+  private GUIController game;
   private TestModalWindow testModalWindow;
 
     void Start()
     {
         data = gameObject.GetComponent<Data>();
-        game = gameObject.GetComponent<PersistentGame>();
-
+        game = gameObject.GetComponent<GUIController>();
         testModalWindow = gameObject.GetComponent<TestModalWindow>();
     }
 
@@ -25,35 +24,32 @@ public class EventStart : MonoBehaviour {
   }
 
   private void handleEvent(Dictionary<string, string> incomingEvent) {
-        if (incomingEvent["type"] == "random")
+        switch (incomingEvent["type"])
         {
-            string[] possibleEvents = incomingEvent["events"].Split(',');
-            string decidedEvent = possibleEvents[Random.Range(0, possibleEvents.Length)];
-
-            switch (incomingEvent["name"])
-            {
-                case "soldiers":
-                    int number = Random.Range(100, 400);
-                    if (incomingEvent["change"] == "positive")
-                    {
-                        data.setPlayerNumericAttribute(game.getCurUnit().PlayerNumber, incomingEvent["name"], number);
-                        testModalWindow.randomEventModal("Oh yes, "+decidedEvent+" You gained "+number+" soldiers.");
-                    }
-                    else
-                    {
-                        data.setPlayerNumericAttribute(game.getCurUnit().PlayerNumber, incomingEvent["name"], -number);
-                        testModalWindow.randomEventModal("Oh no, " + decidedEvent + " You lost " + number + " soldiers.");
-                    }
-                    break;
-                default:
-                    break;
-            }
+            case "random":
+                var decidedEvent = data.getRandomEvent();
+                int number = Random.Range(100, 400);
+                var decidedEventArray = decidedEvent["events"].Split(',');
+                var decidedEventName = decidedEventArray[Random.Range(0, decidedEventArray.Length)];
+                if (decidedEvent["change"] == "positive")
+                {
+                    data.setPlayerNumericAttribute(game.getPlayerNum(), decidedEvent["name"], number);
+                    testModalWindow.randomEventModal("Oh yes, " + decidedEventName + " You gained " + number + " " + decidedEvent["name"]);
+                }
+                else
+                {
+                    data.setPlayerNumericAttribute(game.getPlayerNum(), decidedEvent["name"], -number);
+                    testModalWindow.randomEventModal("Oh no, " + decidedEventName + " You lost " + number + " " + decidedEvent["name"]);
+                }
+                break;
+            case "castle":
+                SceneManager.LoadScene(2);
+                break;
+            default:
+                Debug.Log("event type not available");
+                return;
         }
-        if (incomingEvent["type"] == "castle")
-        {
-            SceneManager.LoadScene(2);
-        }
-        }
+  }
 
   public void createEvent(int pathLocation) {
     //TODO: check if path location exists
