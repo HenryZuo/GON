@@ -15,7 +15,7 @@ public class ViewSelection : MonoBehaviour {
     // castle stats
     private Dictionary<string, string> curCastle;
 
-    void Awake()
+    void Start()
     {
         DataObj = GameObject.Find("GUI Controller");
         data = DataObj.GetComponent<Data>();
@@ -24,12 +24,17 @@ public class ViewSelection : MonoBehaviour {
         curCastle = data.getEvent(guiController.getCurUnit().PathLocation);
         curPlayer = guiController.getPlayerNum();
 
-        if ( (curCastle["owner"] == "") || (curCastle["owner"] == data.getPlayerAttribute(curPlayer, "house")))
+        if ( (curCastle["house"] == "") || (curCastle["house"] == data.getPlayerAttribute(curPlayer, "house")))
         {
-            transform.Find("OwnCastleContainer").gameObject.SetActive(true);
-        } else
+            gameObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+            gameObject.transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
+        }
+        else
         {
-            transform.Find("EnemyCastleContainer").gameObject.SetActive(true);
-        }        
+            gameObject.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
+            gameObject.transform.GetChild(1).GetChild(1).gameObject.SetActive(true);
+
+            gameObject.transform.GetChild(0).GetChild(1).GetChild(0).gameObject.SetActive(true);
+        }
     }
 }

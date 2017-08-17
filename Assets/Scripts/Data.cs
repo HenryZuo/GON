@@ -46,7 +46,7 @@ public class Data : MonoBehaviour {
 			{"name", "Riverrun"},
 			{"soldiers", "100"},
 			{"wealth", "50"},
-			{"house", "Lannister"},
+			{"house", ""},
 			{"general", ""},
 			{"type", "castle"},
             {"max_soldiers", "20000" },
@@ -165,7 +165,7 @@ public class Data : MonoBehaviour {
 			{"name", "King's Landing"},
 			{"soldiers", "5000"},
 			{"wealth", "10000"},
-			{"house", "Lannister"},
+			{"house", ""},
 			{"general", ""},
 			{"type", "castle"},
             {"max_soldiers", "20000" },
@@ -225,7 +225,7 @@ public class Data : MonoBehaviour {
 			{"events", "You're scouts found an abandoned castle with riches still inside!," +
 					   "You are granted a gift from allies across the narrow sea!," +
 					   "A distant relative who has no sons passes away. You inherit a small fortune!," +
-					   "Your people are blessed with a great harvest. You trade away the excess food!,"},
+					   "Your people are blessed with a great harvest. You trade away the excess food!"},
 			{"type", "random"}
 		};
 
@@ -306,7 +306,7 @@ public class Data : MonoBehaviour {
         random_events.Add(lose_wealth);
         random_events.Add(gain_wealth);
         random_events.Add(mystery_positive_wealth);
-        random_events.Add(mystery_negative_generals);
+        //random_events.Add(mystery_negative_generals);
 
         gameData.Add(random);
 		gameData.Add(random);
@@ -772,13 +772,19 @@ public class Data : MonoBehaviour {
 	*/
 	private string playerAttributeErrorHandling(int playerNumber, string attribute, Nullable<int> number) {
 		if (playerNumber >= players.Count || playerNumber < 0) {
-			return "falsePlayer";
+            Debug.Log("playerNumber: " + playerNumber);
+            Debug.Log("attribute: " + attribute);
+            return "falsePlayer";
 		}
 		if (!players [playerNumber].ContainsKey (attribute)) {
-			return "falseAttribute";
+            Debug.Log("playerNumber: " + playerNumber);
+            Debug.Log("attribute: " + attribute);
+            return "falseAttribute";
 		}
 		if (number.HasValue && (Int32.Parse (players [playerNumber] [attribute]) + number.Value) < 0) {
-			return ("not enough " + attribute);
+            Debug.Log("playerNumber: " + playerNumber);
+            Debug.Log("attribute: " + attribute);
+            return ("not enough " + attribute);
 		}
 		return null;
 	}
@@ -804,8 +810,28 @@ public class Data : MonoBehaviour {
 		return true;
 	}
 
-	//map tile get/set function
-	public Dictionary<string, string> getEvent(int pathLocation) {
+    //Needs Testing!
+    public void setPlayerAttribute(int playerNumber, string attribute, bool toAdd, string value)
+    {
+        if (toAdd)
+        {
+            players[playerNumber][attribute] = players[playerNumber][attribute] + "," + value;
+        }
+        else
+        {
+            var arr = players[playerNumber][attribute].Split(',');
+            string[] new_arr = new string[arr.Length + 1];
+            for (var i = 0; i < arr.Length; i++)
+            {
+                new_arr[i] = arr[i];
+            }
+            new_arr[arr.Length] = value;
+            players[playerNumber][attribute] = String.Join(",", new_arr);
+        }
+    }
+
+    //map tile get/set function
+    public Dictionary<string, string> getEvent(int pathLocation) {
         return gameData [pathLocation];
 	}
 
@@ -841,4 +867,17 @@ public class Data : MonoBehaviour {
 	public Dictionary<string, string> getRandomEvent() {
 		return random_events[UnityEngine.Random.Range (0, random_events.Count)];
 	}
+
+    public string getGeneralAttribute(string name, string attribute)
+    {
+        for (var i = 0; i < available_generals.Count; i++)
+        {
+            if (available_generals[i]["name"] == name)
+            {
+                return available_generals[i]["attribute"];
+            }
+        }
+
+        return "";
+    }
 }

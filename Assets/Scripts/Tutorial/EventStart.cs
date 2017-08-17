@@ -27,23 +27,13 @@ public class EventStart : MonoBehaviour {
         switch (incomingEvent["type"])
         {
             case "random":
-                var decidedEvent = data.getRandomEvent();
-                int number = Random.Range(100, 400);
-                var decidedEventArray = decidedEvent["events"].Split(',');
-                var decidedEventName = decidedEventArray[Random.Range(0, decidedEventArray.Length)];
-                if (decidedEvent["change"] == "positive")
-                {
-                    data.setPlayerNumericAttribute(game.getPlayerNum(), decidedEvent["name"], number);
-                    testModalWindow.randomEventModal("Oh yes, " + decidedEventName + " You gained " + number + " " + decidedEvent["name"]);
-                }
-                else
-                {
-                    data.setPlayerNumericAttribute(game.getPlayerNum(), decidedEvent["name"], -number);
-                    testModalWindow.randomEventModal("Oh no, " + decidedEventName + " You lost " + number + " " + decidedEvent["name"]);
-                }
+                Invoke("invokeRandom", game.getDiceRoll() * 0.1f);
                 break;
             case "castle":
-                Invoke("goToCastle", game.getDiceRoll() * 0.2f);                
+                Invoke("invokeCastle", game.getDiceRoll() * 0.1f);                
+                break;
+            case "town":
+                Debug.Log("Townview");
                 break;
             default:
                 Debug.Log("event type not available");
@@ -56,9 +46,26 @@ public class EventStart : MonoBehaviour {
     handleEvent(data.getEvent(pathLocation));
     }
 
-    public void goToCastle()
+    public void invokeCastle()
     {
         SceneManager.LoadScene(2);
     }
     
+    public void invokeRandom()
+    {
+        var decidedEvent = data.getRandomEvent();
+        int number = Random.Range(100, 400);
+        var decidedEventArray = decidedEvent["events"].Split(',');
+        var decidedEventName = decidedEventArray[Random.Range(0, decidedEventArray.Length)];
+        if (decidedEvent["change"] == "positive")
+        {
+            data.setPlayerNumericAttribute(game.getPlayerNum(), decidedEvent["name"], number);
+            testModalWindow.randomEventModal("Oh yes, " + decidedEventName + " You gained " + number + " " + decidedEvent["name"]);
+        }
+        else
+        {
+            data.setPlayerNumericAttribute(game.getPlayerNum(), decidedEvent["name"], -number);
+            testModalWindow.randomEventModal("Oh no, " + decidedEventName + " You lost " + number + " " + decidedEvent["name"]);
+        }
+    }
 }

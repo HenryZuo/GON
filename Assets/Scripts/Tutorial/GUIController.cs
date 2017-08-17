@@ -32,8 +32,20 @@ public class GUIController : MonoBehaviour
     private Boolean initialized = false;
     private int diceRoll;
 
+
+    //curPlayerMarkers
+    private GameObject playerUIArrows;
+    List<Transform> playerMarkers = new List<Transform>();
+
+
     public void Start()
     {
+        playerUIArrows = GameObject.Find("Player UI Arrows");
+        playerMarkers.Add(playerUIArrows.transform.GetChild(0).GetChild(0).GetChild(0));
+        playerMarkers.Add(playerUIArrows.transform.GetChild(1).GetChild(0).GetChild(0));
+        playerMarkers.Add(playerUIArrows.transform.GetChild(2).GetChild(0).GetChild(0));
+        playerMarkers.Add(playerUIArrows.transform.GetChild(3).GetChild(0).GetChild(0));
+
         UnitsParentObj = GameObject.Find("Units Parent");
         //UnitsParent = UnitsParentObj.transform;
         
@@ -64,7 +76,8 @@ public class GUIController : MonoBehaviour
 
     public void Move()
     {
-        diceRoll = UnityEngine.Random.Range(1, 7);
+        //diceRoll = UnityEngine.Random.Range(1, 7);
+        diceRoll = 3;
         displayManager.DisplayDiceRoll("You rolled a " + diceRoll.ToString());
 
         int NewLocation = curUnit.PathLocation + diceRoll;
@@ -121,6 +134,18 @@ public class GUIController : MonoBehaviour
             curPlayer = curPlayer % numPlayers;
         }
         curUnit = units[curPlayer];
+
+        for (var i = 0; i < playerMarkers.Count; i++)
+        {
+            if (i == curPlayer)
+            {
+                playerMarkers[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                playerMarkers[i].gameObject.SetActive(false);
+            }
+        }
     }
 
     public void startGame()
@@ -134,12 +159,11 @@ public class GUIController : MonoBehaviour
             var child = UnitsParent.GetChild(i).GetComponent<Unit>();
             units.Add(child);
             curUnit = units[i];
-            int randomIndex = UnityEngine.Random.Range(0, 5);
-            Cell startCell = Path[randomIndex];
+            Cell startCell = Path[i];
             List<Cell> pp = new List<Cell>();
             pp.Add(startCell);
             curUnit.Move(startCell, pp);
-            curUnit.PathLocation = randomIndex;
+            curUnit.PathLocation = i;
         }
         curUnit = units[0];
         updatePlayerUI();
