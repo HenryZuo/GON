@@ -41,7 +41,6 @@ public class OwnCastleManager : MonoBehaviour {
     
     void Awake(){
         DataObj = GameObject.Find("GUI Controller");
-        Debug.Log("DataObj: " + DataObj);
         data = DataObj.GetComponent<Data>();
         guiController = DataObj.GetComponent<GUIController>();
 

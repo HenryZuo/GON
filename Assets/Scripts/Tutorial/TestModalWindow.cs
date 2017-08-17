@@ -15,8 +15,7 @@ public class TestModalWindow : MonoBehaviour {
     private UnityAction closeModalAction;
 
     private RandomEventPanel randomEventPanel;
-
-
+    
     void Awake()
     {
         modalPanel = ModalPanel.Instance();
