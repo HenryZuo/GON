@@ -77,7 +77,7 @@ public class GUIController : MonoBehaviour
     public void Move()
     {
         //diceRoll = UnityEngine.Random.Range(1, 7);
-        diceRoll = 3;
+        diceRoll = 2;
         displayManager.DisplayDiceRoll("You rolled a " + diceRoll.ToString());
 
         int NewLocation = curUnit.PathLocation + diceRoll;

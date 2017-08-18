@@ -27,12 +27,14 @@ public class ViewSelection : MonoBehaviour {
         if ( (curCastle["house"] == "") || (curCastle["house"] == data.getPlayerAttribute(curPlayer, "house")))
         {
             gameObject.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
-            gameObject.transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
+            //gameObject.transform.GetChild(1).GetChild(0).gameObject.SetActive(true);
         }
         else
         {
             gameObject.transform.GetChild(0).GetChild(1).gameObject.SetActive(true);
-            gameObject.transform.GetChild(1).GetChild(1).gameObject.SetActive(true);
+            gameObject.transform.GetChild(0).GetChild(1).GetChild(1).gameObject.SetActive(false);
+
+            //gameObject.transform.GetChild(1).GetChild(1).gameObject.SetActive(true);
 
             gameObject.transform.GetChild(0).GetChild(1).GetChild(0).gameObject.SetActive(true);
         }

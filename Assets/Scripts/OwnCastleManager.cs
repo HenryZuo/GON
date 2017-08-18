@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 public class OwnCastleManager : MonoBehaviour {
 
@@ -16,6 +17,7 @@ public class OwnCastleManager : MonoBehaviour {
     private int curPlayer;
 	private int soldiersPlayer;
 	private int wealthPlayer;
+    private List<string> generalsPlayer;
 
     // castle stats
     private Dictionary<string, string> curCastle;
@@ -28,16 +30,7 @@ public class OwnCastleManager : MonoBehaviour {
     // castle components
     private Slider soldierSlider;
     private Slider wealthSlider;
-	private Dropdown generals;
-
-
-	private List<string> options = new List<string>()
-	{
-		"Ned Stark",
-		"Jon Snow",
-		"Robb Stark"
-	};
-    
+	private Dropdown generalsDropdown;
     
     void Start(){
         DataObj = GameObject.Find("GUI Controller");
@@ -76,10 +69,11 @@ public class OwnCastleManager : MonoBehaviour {
         tollCastleText = GameObject.Find("tollCastle Text").GetComponent<Text>();
         tollCastleText.text = "Toll: " + getToll(wealthSlider.value).ToString();
 
-        // start general options
-        generals = GameObject.Find("General Dropdown").GetComponent<Dropdown>();
-        generals.ClearOptions();
-        generals.AddOptions(options);
+        // start general dropdown
+        generalsPlayer = data.getPlayerAttribute(curPlayer, "generals").Split(',').ToList();
+        generalsDropdown = GameObject.Find("General Dropdown").GetComponent<Dropdown>();
+        generalsDropdown.ClearOptions();
+        generalsDropdown.AddOptions(generalsPlayer);
     }
 
 
@@ -103,7 +97,17 @@ public class OwnCastleManager : MonoBehaviour {
 
     public void onGeneralDropdownChange()
     {
-        generalCastleText.text = generals.itemText.text;
+        if( curCastle["general"] == "")
+        {
+            data.setCastleAttribute(curCastle["name"], "house", data.getPlayerAttribute(curPlayer, "house"));
+        }
+        if (curCastle["general"] != "")
+        {
+            data.setPlayerAttribute(curPlayer, "generals", true, curCastle["general"]);
+        }
+        data.setCastleAttribute(curCastle["name"], "general", generalsDropdown.captionText.text);
+        data.setPlayerAttribute(curPlayer, "generals", false, curCastle["general"]);
+        generalCastleText.text = "Guarded by: " + curCastle["general"];
     }
 
     public int getToll( float castleWealth )

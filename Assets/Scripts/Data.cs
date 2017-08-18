@@ -19,13 +19,13 @@ public class Data : MonoBehaviour {
         //instantiate game data
         Dictionary<string, string> high_garden = new Dictionary<string, string>{
 			{"name", "High Garden"},
-			{"soldiers", "3000"},
-			{"wealth", "5000"},
-			{"house", "Tyrell"},
+			{"soldiers", "300"},
+			{"wealth", "500"},
+			{"house", ""},
 			{"general", ""},
 			{"type", "castle"},
-            {"max_soldiers", "20000" },
-            {"max_wealth", "20000" },
+            {"max_soldiers", "1000" },
+            {"max_wealth", "1000" },
 
         };
 		castles.Add (high_garden);
@@ -117,7 +117,7 @@ public class Data : MonoBehaviour {
 			{"name", "The Eyrie"},
 			{"soldiers", "1000"},
 			{"wealth", "250"},
-			{"house", "?"},
+			{"house", ""},
 			{"general", ""},
 			{"type", "castle"},
             {"max_soldiers", "20000" },
@@ -728,33 +728,33 @@ public class Data : MonoBehaviour {
 		//instantiate players
 		Dictionary<string, string> ned_stark = new Dictionary<string, string>{
 			{"house", "Stark"},
-			{"soldiers", "20000"},
-			{"wealth", "25000"},
-            {"castle", "0,4"},
+			{"soldiers", "2000"},
+			{"wealth", "2500"},
+            {"castle", "Winterfell"},
             {"generals", "Ned Stark,Robb Stark,Catelyn Stark,Bran Stark"}
 		};
 
 		Dictionary<string, string> daenerys_targaryen = new Dictionary<string, string>{
 			{"house", "Targaryen"},
-			{"soldiers", "15000"},
-			{"wealth", "10000"},
-            {"castle", "0,4"},
+			{"soldiers", "1500"},
+			{"wealth", "1000"},
+            {"castle", ""},
             {"generals", "Daenerys Targaryen,Viserys Targaryen,Jorah Mormont"}
 		};
 
 		Dictionary<string, string> tywin_lannister = new Dictionary<string, string>{
 			{"house", "Lannister"},
-			{"soldiers", "23000"},
-			{"wealth", "100000"},
-            {"castle", "0,4"},
+			{"soldiers", "2300"},
+			{"wealth", "10000"},
+            {"castle", "Casterly Rock"},
             {"generals", "Tywin Lannister,Cersei Lannister,Jaime Lannister,Joffrey Lannister,Tommen Lannister,Gregor Clegane"}
 		};
 
 		Dictionary<string, string> olenna_tyrell = new Dictionary<string, string>{
 			{"house", "Tyrell"},
-			{"soldiers", "100000"},
-			{"wealth", "70000"},
-            {"castle", "0,4"},
+			{"soldiers", "10000"},
+			{"wealth", "7000"},
+            {"castle", ""},
             {"generals", "Olenna Tyrell,Mace Tyrell,Margery Tyrell,Loras Tyrell"}
 		};
 
@@ -868,16 +868,53 @@ public class Data : MonoBehaviour {
 		return random_events[UnityEngine.Random.Range (0, random_events.Count)];
 	}
 
-    public string getGeneralAttribute(string name, string attribute)
+    public string getGeneralAttribute(string name, string attribute, int listNumber)
     {
-        for (var i = 0; i < available_generals.Count; i++)
+        List<Dictionary<string, string>> list;
+        switch (listNumber)
         {
-            if (available_generals[i]["name"] == name)
+            case 0:
+                list = player1_generals;
+                break;
+            case 1:
+                list = player2_generals;
+                break;
+            case 2:
+                list = player3_generals;
+                break;
+            case 3:
+                list = player4_generals;
+                break;
+            default:
+                list = available_generals;
+                break;
+        }
+        for (var i = 0; i < list.Count; i++)
+        {
+            if (list[i]["name"] == name)
             {
-                return available_generals[i]["attribute"];
+                return list[i][attribute];
             }
         }
 
         return "";
+    }
+
+    public int getPlayerByHouse (string house)
+    {
+        Debug.Log("getplayerbyhouse input house: " + house);
+        switch (house)
+        {
+            case "Stark":
+                return 0;
+            case "Lannister":
+                return 1;
+            case "Targaryen":
+                return 2;
+            case "Tyrell":
+                return 3;
+            default:
+                return -1;
+        }
     }
 }
