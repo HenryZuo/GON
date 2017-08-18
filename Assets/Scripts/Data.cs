@@ -760,8 +760,8 @@ public class Data : MonoBehaviour {
 
 
 		players.Add (ned_stark);
-		players.Add (daenerys_targaryen);
-        players.Add (tywin_lannister);
+        players.Add(tywin_lannister);
+        players.Add (daenerys_targaryen);
         players.Add (olenna_tyrell);
 	}
 
@@ -902,7 +902,6 @@ public class Data : MonoBehaviour {
 
     public int getPlayerByHouse (string house)
     {
-        Debug.Log("getplayerbyhouse input house: " + house);
         switch (house)
         {
             case "Stark":
@@ -917,4 +916,17 @@ public class Data : MonoBehaviour {
                 return -1;
         }
     }
+
+    public string getCastleHouse(string name)
+    {
+        for (var i = 0; i < castles.Count; i++)
+        {
+            if (castles[i]["name"] == name)
+            {
+                return castles[i]["house"];
+            }
+        }
+        return "";
+    }
+
 }

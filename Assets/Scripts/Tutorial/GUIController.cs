@@ -21,6 +21,10 @@ public class GUIController : MonoBehaviour
 
     private DisplayManager displayManager;
 
+    //curPlayerMarkers
+    private GameObject playerUIArrows;
+    List<Transform> playerMarkers = new List<Transform>();
+
     int curPlayer = 0;
     int numPlayers = 4;
 
@@ -29,14 +33,20 @@ public class GUIController : MonoBehaviour
     private List<Unit> units = new List<Unit>();
     private List<Cell> Path = new List<Cell>();
 
+    //int to store number of ais, should be populated at menu screen
+    private int num_ais = 2;
+
     private Boolean initialized = false;
     private int diceRoll;
 
+    public Material StarkBlue;
+    public Material LannisterRed;
+    public Material TargayrenRed;
+    public Material TyrellGreen;
+    public Material NoOneWhite;
 
-    //curPlayerMarkers
-    private GameObject playerUIArrows;
-    List<Transform> playerMarkers = new List<Transform>();
-
+    private Transform flags;
+    private List<GameObject> flag_list = new List<GameObject>();
 
     public void Start()
     {
@@ -48,7 +58,7 @@ public class GUIController : MonoBehaviour
 
         UnitsParentObj = GameObject.Find("Units Parent");
         //UnitsParent = UnitsParentObj.transform;
-        
+
         CellGridObj = GameObject.Find("CellGrid");
         CellGrid = CellGridObj.GetComponent<CellGrid>();
 
@@ -70,6 +80,47 @@ public class GUIController : MonoBehaviour
         else
         {
             startGame();
+            //populate ai fields
+            for (var i = 3; i >= 4 - num_ais; i--)
+            {
+                units[i].setAi();
+            }
+            if (units[0].isAi())
+            {
+                handleAiMove();
+            }
+        }
+
+        //initialize flags
+        flags = GameObject.Find("Flags").transform;
+        //change flag colors
+        updateFlags();
+    }
+
+    private void updateFlags()
+    {
+        for (var i = 0; i < flags.childCount; i++)
+        {
+            string castle_name = flags.GetChild(i).name;
+            string house = Data.getCastleHouse(castle_name);
+            switch (house)
+            {
+                case "Stark":
+                    flags.GetChild(i).Find("BannerD_Cloth").GetComponent<Renderer>().material = StarkBlue;
+                    break;
+                case "Lannister":
+                    flags.GetChild(i).Find("BannerD_Cloth").GetComponent<Renderer>().material = LannisterRed;
+                    break;
+                case "Targaryen":
+                    flags.GetChild(i).Find("BannerD_Cloth").GetComponent<Renderer>().material = TargayrenRed;
+                    break;
+                case "Tyrell":
+                    flags.GetChild(i).Find("BannerD_Cloth").GetComponent<Renderer>().material = TyrellGreen;
+                    break;
+                default:
+                    flags.GetChild(i).Find("BannerD_Cloth").GetComponent<Renderer>().material = NoOneWhite;
+                    break;
+            }
         }
     }
 
@@ -78,7 +129,7 @@ public class GUIController : MonoBehaviour
     {
         //diceRoll = UnityEngine.Random.Range(1, 7);
         diceRoll = 2;
-        displayManager.DisplayDiceRoll("You rolled a " + diceRoll.ToString());
+        displayManager.DisplayDiceRoll("Dice rolled to " + diceRoll.ToString());
 
         int NewLocation = curUnit.PathLocation + diceRoll;
         if (NewLocation > 117)
@@ -108,7 +159,6 @@ public class GUIController : MonoBehaviour
 
         curUnit.PathLocation = NewLocation;
 
-        //calls create event with the destination cell
         eventStart.createEvent(curUnit.PathLocation);
     }
 
@@ -135,6 +185,7 @@ public class GUIController : MonoBehaviour
         }
         curUnit = units[curPlayer];
 
+
         for (var i = 0; i < playerMarkers.Count; i++)
         {
             if (i == curPlayer)
@@ -146,7 +197,49 @@ public class GUIController : MonoBehaviour
                 playerMarkers[i].gameObject.SetActive(false);
             }
         }
+
+        //handle ai moves
+        if (curUnit.isAi())
+        {
+            handleAiMove();
+        }
+
+        updateFlags();
     }
+
+    private void handleAiMove()
+    {
+        StartCoroutine(waitMove());
+        Invoke("EndTurn", 3f);
+    }
+
+    private IEnumerator waitMove()
+    {
+        yield return new WaitForSeconds(1.5f);
+        Move();
+        StartCoroutine(waitProcessData());
+        yield return null;
+    }
+
+    private IEnumerator waitProcessData()
+    {
+        yield return new WaitForSeconds(diceRoll * 0.1f + 1f);
+        string event_type = Data.getEvent(curUnit.PathLocation)["type"];
+        switch (event_type)
+        {
+            default:
+                //			StartCoroutine (waitEndTurn ());
+                yield return null;
+                break;
+        }
+    }
+
+    private IEnumerator waitEndTurn()
+    {
+        yield return null;
+        EndTurn();
+    }
+
 
     public void startGame()
     {
@@ -159,11 +252,13 @@ public class GUIController : MonoBehaviour
             var child = UnitsParent.GetChild(i).GetComponent<Unit>();
             units.Add(child);
             curUnit = units[i];
-            Cell startCell = Path[i];
+            //int randomIndex = UnityEngine.Random.Range(0, 5);
+            int randomIndex = i;
+            Cell startCell = Path[randomIndex];
             List<Cell> pp = new List<Cell>();
             pp.Add(startCell);
             curUnit.Move(startCell, pp);
-            curUnit.PathLocation = i;
+            curUnit.PathLocation = randomIndex;
         }
         curUnit = units[0];
         updatePlayerUI();
@@ -185,7 +280,6 @@ public class GUIController : MonoBehaviour
 
     public void updatePlayerUI()
     {
-
         Transform playerUI = canvas.transform.Find("Player UI");
         for (int i = 0; i < playerUI.childCount - 1; i++)
         {
@@ -219,6 +313,7 @@ public class GUIController : MonoBehaviour
         }
     }
 
+    
     public DisplayManager getDisplayManager()
     {
         return displayManager;

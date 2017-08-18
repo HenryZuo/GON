@@ -81,7 +81,9 @@ public class JoustManager : MonoBehaviour
         generalsDropdown = GameObject.Find("Champion Dropdown").GetComponent<Dropdown>();
         generalsDropdown.ClearOptions();
         generalsDropdown.AddOptions(generalsPlayer);
-        
+
+        // start curCastle
+        curCastle = data.getEvent(guiController.getCurUnit().PathLocation);
     }
 
 
@@ -107,7 +109,15 @@ public class JoustManager : MonoBehaviour
     {
         if(playerChampName != "----")
         {
-            var diff = (int.Parse(playerChampStrength) - int.Parse(enemyChampStrength)) * 3;
+            var diff;
+            try
+            {
+                diff = (int.Parse(playerChampStrength) - int.Parse(enemyChampStrength)) * 3;
+            }
+            catch
+            {
+                diff = 0;
+            }
             var rand = UnityEngine.Random.Range(0, 100);
             if(rand + diff > 50)
             {
@@ -126,11 +136,13 @@ public class JoustManager : MonoBehaviour
         // start outcome panel
         outcomeTextObj = GameObject.Find("Outcome Text");
         outcomeTextObj.GetComponent<Text>().text = winStr;
+
+        guiController.EndTurn();
     }
 
     public void joustLose()
     {
-        string castleWealth = data.getEvent(guiController.getCurUnit().PathLocation)["wealth"];
+        string castleWealth = curCastle["wealth"];
         int toll = (int)Math.Ceiling(Math.Max(100, int.Parse(castleWealth) * 0.4));
         string loseStr = "You lost the Joust and must pay double! You lost " + toll + " in wealth.";
 
@@ -140,5 +152,7 @@ public class JoustManager : MonoBehaviour
         // start outcome panel
         outcomeTextObj = GameObject.Find("Outcome Text");
         outcomeTextObj.GetComponent<Text>().text = loseStr;
+
+        guiController.EndTurn();
     }
 }

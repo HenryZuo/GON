@@ -81,6 +81,7 @@ public class EnemyCastleManager : MonoBehaviour
         outcomeTextObj = GameObject.Find("Outcome Text");
         string tollStr = "Toll was paid! You paid " + getToll(float.Parse(curCastle["wealth"])).ToString() + " to House " + curCastle["house"];
         outcomeTextObj.GetComponent<Text>().text = tollStr;
-        
+
+        guiController.EndTurn();
     }
 }

@@ -48,7 +48,10 @@ public class EventStart : MonoBehaviour {
 
     public void invokeCastle()
     {
-        SceneManager.LoadScene(2);
+        if (!game.getCurUnit().isAi())
+        {
+            SceneManager.LoadScene(2);
+        }
     }
     
     public void invokeRandom()
@@ -60,12 +63,18 @@ public class EventStart : MonoBehaviour {
         if (decidedEvent["change"] == "positive")
         {
             data.setPlayerNumericAttribute(game.getPlayerNum(), decidedEvent["name"], number);
-            testModalWindow.randomEventModal("Oh yes, " + decidedEventName + " You gained " + number + " " + decidedEvent["name"]);
+            if (!game.getCurUnit().isAi())
+            {
+                testModalWindow.randomEventModal("Oh yes, " + decidedEventName + " You gained " + number + " " + decidedEvent["name"]);
+            }
         }
         else
         {
             data.setPlayerNumericAttribute(game.getPlayerNum(), decidedEvent["name"], -number);
-            testModalWindow.randomEventModal("Oh no, " + decidedEventName + " You lost " + number + " " + decidedEvent["name"]);
+            if (!game.getCurUnit().isAi())
+            {
+                testModalWindow.randomEventModal("Oh no, " + decidedEventName + " You lost " + number + " " + decidedEvent["name"]);
+            }
         }
     }
 }

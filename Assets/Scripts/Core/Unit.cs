@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,13 +67,15 @@ public abstract class Unit : MonoBehaviour
     /// </summary>
     public int PlayerNumber;
 
-	public List<Cell> Path = new List<Cell>();
-	public int PathLocation = 0;
+    public List<Cell> Path = new List<Cell>();
+    public int PathLocation = 0;
 
     /// <summary>
     /// Indicates if movement animation is playing.
     /// </summary>
     public bool isMoving { get; set; }
+
+    private bool ai = false;
 
     private static IPathfinding _pathfinder = new AStarPathfinding();
 
@@ -136,7 +139,7 @@ public abstract class Unit : MonoBehaviour
     //    MarkAsDestroyed();
     //    Destroy(gameObject);
     //}
-    
+
     /// <summary>
     /// Method is called when unit is selected.
     /// </summary>
@@ -186,7 +189,7 @@ public abstract class Unit : MonoBehaviour
         {
             SetState(new UnitStateMarkedAsFinished(this));
             MovementPoints = 0;
-        }  
+        }
     }
     /// <summary>
     /// Attacking unit calls Defend method on defending unit. 
@@ -232,7 +235,7 @@ public abstract class Unit : MonoBehaviour
             transform.position = Cell.transform.position;
 
         if (UnitMoved != null)
-            UnitMoved.Invoke(this, new MovementEventArgs(Cell, destinationCell, path));    
+            UnitMoved.Invoke(this, new MovementEventArgs(Cell, destinationCell, path));
     }
     protected virtual IEnumerator MovementAnimation(List<Cell> path)
     {
@@ -241,9 +244,9 @@ public abstract class Unit : MonoBehaviour
         path.Reverse();
         foreach (var cell in path)
         {
-            while (new Vector2(transform.position.x,transform.position.y) != new Vector2(cell.transform.position.x,cell.transform.position.y))
+            while (new Vector2(transform.position.x, transform.position.y) != new Vector2(cell.transform.position.x, cell.transform.position.y))
             {
-                transform.position = Vector3.MoveTowards(transform.position, new Vector3(cell.transform.position.x,cell.transform.position.y,transform.position.z), Time.deltaTime * MovementSpeed);
+                transform.position = Vector3.MoveTowards(transform.position, new Vector3(cell.transform.position.x, cell.transform.position.y, transform.position.z), Time.deltaTime * MovementSpeed);
                 yield return 0;
             }
         }
@@ -348,6 +351,16 @@ public abstract class Unit : MonoBehaviour
     /// Method returns the unit to its base appearance
     /// </summary>
     public abstract void UnMark();
+
+    public void setAi()
+    {
+        ai = true;
+    }
+
+    public bool isAi()
+    {
+        return ai;
+    }
 }
 
 public class MovementEventArgs : EventArgs
@@ -378,3 +391,4 @@ public class AttackEventArgs : EventArgs
         Damage = damage;
     }
 }
+
