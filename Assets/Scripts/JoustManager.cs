@@ -109,7 +109,7 @@ public class JoustManager : MonoBehaviour
     {
         if(playerChampName != "----")
         {
-            var diff;
+            var diff = 0;
             try
             {
                 diff = (int.Parse(playerChampStrength) - int.Parse(enemyChampStrength)) * 3;
