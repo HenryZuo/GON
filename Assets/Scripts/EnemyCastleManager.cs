@@ -9,7 +9,7 @@ public class EnemyCastleManager : MonoBehaviour
 {
 
     private GameObject DataObj;
-    private GameObject outcomePanelObj;
+    private GameObject outcomeTextObj;
 
     private Data data;
     private GUIController guiController;
@@ -57,10 +57,7 @@ public class EnemyCastleManager : MonoBehaviour
         wealthCastleText.text = "Wealth: " + curCastle["wealth"];
         tollCastleText = GameObject.Find("tollCastle Text").GetComponent<Text>();
         tollCastleText.text = "Toll: " + getToll(float.Parse(curCastle["wealth"])).ToString();
-
-        // start outcome panel
-        outcomePanelObj = GameObject.Find("Canvas").transform.GetChild(2).gameObject;
-
+        
     }
 
 
@@ -79,12 +76,11 @@ public class EnemyCastleManager : MonoBehaviour
     {
         data.setPlayerNumericAttribute(curPlayer, "wealth", 0 - getToll(float.Parse(curCastle["wealth"])));
         data.setPlayerNumericAttribute(data.getPlayerByHouse(curCastle["house"]), "wealth", getToll(float.Parse(curCastle["wealth"])));
-
-        outcomePanelObj.SetActive(true);
-        string tollStr = "You paid " + getToll(float.Parse(curCastle["wealth"])).ToString() + "to House " + curCastle["house"];
-        outcomePanelObj.transform.GetChild(0).GetChild(0).gameObject.GetComponent<Text>().text = tollStr;
-
-        //guiController.EndTurn();
-        //SceneManager.LoadScene(1);
+        
+        // start outcome panel
+        outcomeTextObj = GameObject.Find("Outcome Text");
+        string tollStr = "Toll was paid! You paid " + getToll(float.Parse(curCastle["wealth"])).ToString() + " to House " + curCastle["house"];
+        outcomeTextObj.GetComponent<Text>().text = tollStr;
+        
     }
 }

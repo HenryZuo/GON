@@ -14,8 +14,8 @@ public class JoustManager : MonoBehaviour
     private Data data;
     private GUIController guiController;
 
-    // outcome panel
-    private GameObject outcomePanelObj;
+    // outcome text
+    private GameObject outcomeTextObj;
 
     // player stats
     private int curPlayer;
@@ -81,9 +81,7 @@ public class JoustManager : MonoBehaviour
         generalsDropdown = GameObject.Find("Champion Dropdown").GetComponent<Dropdown>();
         generalsDropdown.ClearOptions();
         generalsDropdown.AddOptions(generalsPlayer);
-
-        // start outcome panel
-        outcomePanelObj = GameObject.Find("Outcome Panel");
+        
     }
 
 
@@ -95,8 +93,6 @@ public class JoustManager : MonoBehaviour
 
     public void onGeneralDropdownChange()
     {
-        Debug.Log("onGeneralDropdownChange() is called");
-        Debug.Log("data.getGeneralAttribute(playerChampName, strength) ---> " + data.getGeneralAttribute(playerChampName, "strength", curPlayer));
         // set player champ text
         playerChampName = generalsDropdown.captionText.text;
         playerChampStrength = data.getGeneralAttribute(playerChampName, "strength", curPlayer);
@@ -126,21 +122,23 @@ public class JoustManager : MonoBehaviour
 
     public void joustWin()
     {
-        outcomePanelObj.SetActive(true);
-        string winStr = "You won the Joust!";
-        outcomePanelObj.transform.Find("Outcome Box/Outcome Text").GetComponent<Text>().text = winStr;
-        guiController.EndTurn();
+        string winStr = playerChampName + " defeated " + enemyChampName + " in the Joust! Your general's victory exempted you from the toll!";
+        // start outcome panel
+        outcomeTextObj = GameObject.Find("Outcome Text");
+        outcomeTextObj.GetComponent<Text>().text = winStr;
     }
 
     public void joustLose()
     {
-        outcomePanelObj.SetActive(true);
         string castleWealth = data.getEvent(guiController.getCurUnit().PathLocation)["wealth"];
         int toll = (int)Math.Ceiling(Math.Max(100, int.Parse(castleWealth) * 0.4));
         string loseStr = "You lost the Joust and must pay double! You lost " + toll + " in wealth.";
-        outcomePanelObj.transform.Find("Outcome Box/Outcome Text").GetComponent<Text>().text = loseStr;
+
         data.setPlayerNumericAttribute(curPlayer, "wealth", 0 - toll);
         data.setPlayerNumericAttribute(data.getPlayerByHouse(curCastle["house"]), "wealth", toll);
-        guiController.EndTurn();
+
+        // start outcome panel
+        outcomeTextObj = GameObject.Find("Outcome Text");
+        outcomeTextObj.GetComponent<Text>().text = loseStr;
     }
 }
