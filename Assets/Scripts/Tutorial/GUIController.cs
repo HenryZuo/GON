@@ -127,8 +127,16 @@ public class GUIController : MonoBehaviour
 
     public void Move()
     {
-        //diceRoll = UnityEngine.Random.Range(1, 7);
-        diceRoll = 2;
+        
+        if (curUnit.PathLocation <= 2)
+        {
+            diceRoll = 2; 
+        }
+        else
+        {
+            diceRoll = UnityEngine.Random.Range(2, 12);
+        }
+        
         displayManager.DisplayDiceRoll("Dice rolled to " + diceRoll.ToString());
 
         int NewLocation = curUnit.PathLocation + diceRoll;
