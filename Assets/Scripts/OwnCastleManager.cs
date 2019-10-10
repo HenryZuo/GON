@@ -26,11 +26,17 @@ public class OwnCastleManager : MonoBehaviour {
     private Text generalCastleText;
     private Text nameCastleText;
     private Text tollCastleText;
+    private Text playerGeneralStrengthText;
+    private Text playerGeneralIntelligenceText;
 
     // castle components
     private Slider soldierSlider;
     private Slider wealthSlider;
 	private Dropdown generalsDropdown;
+
+    // general stats
+    private string playerGeneralStrength;
+    private string playerGeneralIntelligence;
     
     void Start(){
         DataObj = GameObject.Find("GUI Controller");
@@ -49,7 +55,14 @@ public class OwnCastleManager : MonoBehaviour {
 
         // start general name
         generalCastleText = GameObject.Find("generalCastle Text").GetComponent<Text>();
-        generalCastleText.text = "Guarded by: " + curCastle["general"];
+        if (String.IsNullOrEmpty(curCastle["general"]))
+        {
+            generalCastleText.text = "Guarded by: -----";
+        }
+        else
+        {
+            generalCastleText.text = "Guarded by: " + curCastle["general"];
+        }        
 
         // start soldier slider 
         soldierSlider = GameObject.Find("SoldierSlider").GetComponent<Slider>();
@@ -74,10 +87,15 @@ public class OwnCastleManager : MonoBehaviour {
         generalsDropdown = GameObject.Find("General Dropdown").GetComponent<Dropdown>();
         generalsDropdown.ClearOptions();
         generalsDropdown.AddOptions(generalsPlayer);
+
+        // initialize player general Text game component
+        playerGeneralStrengthText = GameObject.Find("GeneralStrengthText").GetComponent<Text>();
+        playerGeneralIntelligenceText = GameObject.Find("GeneralIntelligenceText").GetComponent<Text>();
+
     }
 
 
-	void Update(){
+    void Update(){
 
     }
 		
@@ -108,6 +126,11 @@ public class OwnCastleManager : MonoBehaviour {
         data.setCastleAttribute(curCastle["name"], "general", generalsDropdown.captionText.text);
         data.setPlayerAttribute(curPlayer, "generals", false, curCastle["general"]);
         generalCastleText.text = "Guarded by: " + curCastle["general"];
+
+        playerGeneralStrength = data.getGeneralAttribute(curCastle["general"], "strength", curPlayer);
+        playerGeneralStrengthText.text = "Strength: " + playerGeneralStrength;
+        playerGeneralIntelligence = data.getGeneralAttribute(curCastle["general"], "intelligence", curPlayer);
+        playerGeneralIntelligenceText.text = "Intelligence: " + playerGeneralIntelligence;
     }
 
     public int getToll( float castleWealth )

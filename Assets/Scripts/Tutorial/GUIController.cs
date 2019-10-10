@@ -255,7 +255,9 @@ public class GUIController : MonoBehaviour
         Path = CellGrid.generatePath();
         DiceText.text = "";
         UnitsParent = UnitsParentObj.transform;
-        for (int i = 0; i < UnitsParent.childCount; i++)
+
+        // human players
+        for (int i = 0; i < 2; i++)
         {
             var child = UnitsParent.GetChild(i).GetComponent<Unit>();
             units.Add(child);
@@ -268,6 +270,22 @@ public class GUIController : MonoBehaviour
             curUnit.Move(startCell, pp);
             curUnit.PathLocation = randomIndex;
         }
+
+        // disperse AI players
+        for (int i = 2; i < UnitsParent.childCount; i++)
+        {
+            var child = UnitsParent.GetChild(i).GetComponent<Unit>();
+            units.Add(child);
+            curUnit = units[i];
+            //int randomIndex = UnityEngine.Random.Range(0, 5);
+            int randomIndex = i*30;
+            Cell startCell = Path[randomIndex];
+            List<Cell> pp = new List<Cell>();
+            pp.Add(startCell);
+            curUnit.Move(startCell, pp);
+            curUnit.PathLocation = randomIndex;
+        }
+
         curUnit = units[0];
         updatePlayerUI();
         initialized = true;

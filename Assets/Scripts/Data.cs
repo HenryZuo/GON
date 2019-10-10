@@ -35,7 +35,7 @@ public class Data : MonoBehaviour {
 			{"soldiers", "1000"},
 			{"wealth", "4000"},
 			{"house", "Lannister"},
-			{"general", ""},
+			{"general", "Cersei Lannister"},
 			{"type", "castle"},
             {"max_soldiers", "20000" },
             {"max_wealth", "20000" },
@@ -870,16 +870,17 @@ public class Data : MonoBehaviour {
 
     public string getGeneralAttribute(string name, string attribute, int listNumber)
     {
+        Debug.Log("getGeneralAttribute || " + name + attribute + listNumber);
         List<Dictionary<string, string>> list;
         switch (listNumber)
         {
             case 0:
                 list = player1_generals;
                 break;
-            case 1:
+            case 2:
                 list = player2_generals;
                 break;
-            case 2:
+            case 1:
                 list = player3_generals;
                 break;
             case 3:
@@ -891,12 +892,15 @@ public class Data : MonoBehaviour {
         }
         for (var i = 0; i < list.Count; i++)
         {
+            Debug.Log("list[i][name]" + list[i]["name"]);
             if (list[i]["name"] == name)
             {
+                Debug.Log("list[i][attribute] RETURN " + list[i][attribute]);
                 return list[i][attribute];
             }
         }
 
+        Debug.Log("WILL RETURN EMPTY STRING");
         return "";
     }
 

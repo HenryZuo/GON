@@ -48,13 +48,13 @@ public class EnemyCastleManager : MonoBehaviour
         nameHouseCastleText = GameObject.Find("nameHouseCastle Text").GetComponent<Text>();
         nameHouseCastleText.text = "House " + curCastle["house"];
         generalCastleText = GameObject.Find("nameGeneralCastle Text").GetComponent<Text>();
-        generalCastleText.text = "Guarded by " + curCastle["general"];
+        generalCastleText.text = "Guarded by: " + curCastle["general"];
 
         // start info2 text 
         soldiersCastleText = GameObject.Find("soldiersCastle Text").GetComponent<Text>();
-        soldiersCastleText.text = "Soldiers: " + curCastle["general"];
+        soldiersCastleText.text = curCastle["soldiers"];
         wealthCastleText = GameObject.Find("wealthCastle Text").GetComponent<Text>();
-        wealthCastleText.text = "Wealth: " + curCastle["wealth"];
+        wealthCastleText.text = curCastle["wealth"];
         tollCastleText = GameObject.Find("tollCastle Text").GetComponent<Text>();
         tollCastleText.text = "Toll: " + getToll(float.Parse(curCastle["wealth"])).ToString();
         

@@ -54,7 +54,7 @@ public class JoustManager : MonoBehaviour
 
         enemyChampName = enemyCastle["general"];
         enemyChampStrength = data.getGeneralAttribute(enemyChampName, "strength", data.getPlayerByHouse(enemyCastle["house"]));
-        enemyChampIntelligence = data.getGeneralAttribute(enemyChampName, "strength", data.getPlayerByHouse(enemyCastle["house"]));
+        enemyChampIntelligence = data.getGeneralAttribute(enemyChampName, "intelligence", data.getPlayerByHouse(enemyCastle["house"]));
 
         playerChampName = "----";
         playerChampStrength = "----";
@@ -96,11 +96,16 @@ public class JoustManager : MonoBehaviour
     public void onGeneralDropdownChange()
     {
         // set player champ text
+        Debug.Log("call onGeneralDropdownChange");
         playerChampName = generalsDropdown.captionText.text;
+        Debug.Log("get playerchampstrength");
         playerChampStrength = data.getGeneralAttribute(playerChampName, "strength", curPlayer);
-        playerChampIntelligence= data.getGeneralAttribute(playerChampName, "intelligence", curPlayer);
+        Debug.Log("get playerchampintelligence");
+        playerChampIntelligence = data.getGeneralAttribute(playerChampName, "intelligence", curPlayer);
         playerChampNameText.text = "Your Champion: " + playerChampName;
-        playerChampStrengthText.text = "Strength: " + playerChampStrength; 
+        Debug.Log("change playerchampstrength");
+        playerChampStrengthText.text = "Strength: " + playerChampStrength;
+        Debug.Log("change playerchampintelligence");
         playerChampIntelligenceText.text = "Intelligence: " + playerChampIntelligence;
     }
 
@@ -137,7 +142,7 @@ public class JoustManager : MonoBehaviour
         outcomeTextObj = GameObject.Find("Outcome Text");
         outcomeTextObj.GetComponent<Text>().text = winStr;
 
-        guiController.EndTurn();
+        // guiController.EndTurn();
     }
 
     public void joustLose()
@@ -153,6 +158,11 @@ public class JoustManager : MonoBehaviour
         outcomeTextObj = GameObject.Find("Outcome Text");
         outcomeTextObj.GetComponent<Text>().text = loseStr;
 
+        // guiController.EndTurn();
+    }
+
+    public void endTurn()
+    {
         guiController.EndTurn();
     }
 }
